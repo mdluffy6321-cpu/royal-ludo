@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #070B19;
+    color: #F8FAFC;
+    font-family: 'Outfit', sans-serif;
+  }
+
+  h1, h2, h3, .font-royal {
+    font-family: 'Cinzel', serif;
+  }
+}
+
+/* Custom Gold and Dark Glowing Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #070B19;
+}
+::-webkit-scrollbar-thumb {
+  background: #23325D;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #F59E0B;
+}
+
+/* Glassmorphism Classes */
+.glass-panel {
+  background: rgba(14, 22, 46, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(35, 50, 93, 0.8);
+}
+
+.glass-panel-gold {
+  background: rgba(14, 22, 46, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  box-shadow: 0 0 20px -5px rgba(245, 158, 11, 0.2);
+}
+
+/* Shimmer animation for golden badges and coins */
+@keyframes goldShimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.gold-gradient-text {
+  background: linear-gradient(135deg, #FDE68A 0%, #F59E0B 50%, #D97706 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-badge {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(217, 119, 6, 0.3) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.5);
+}
+
+.purple-badge {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(88, 28, 135, 0.3) 100%);
+  border: 1px solid rgba(139, 92, 246, 0.5);
+}
+
