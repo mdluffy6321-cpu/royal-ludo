@@ -145,6 +145,101 @@ export const ProfilePage: React.FC = () => {
         </div>
       </div>
 
+      {/* Royal Badges & Achievements */}
+      <div className="rounded-3xl glass-panel p-5 sm:p-6 border border-royal-border/80 shadow-card-glow">
+        <div className="flex items-center gap-2 mb-4 pb-3 border-b border-royal-border/60">
+          <Trophy className="w-4 h-4 text-royal-gold" />
+          <h2 className="font-royal text-lg font-bold text-white">
+            Honors & Unlockable Badges
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {[
+            { title: 'Maharaja Champion', desc: 'Won 25+ matches in the Royal Arena', icon: '👑', unlocked: true },
+            { title: 'Lightning Striker', desc: 'Won a 1v1 battle under 5 minutes', icon: '⚡', unlocked: true },
+            { title: 'Token Hunter', desc: 'Captured 3+ opponent tokens in one game', icon: '🎯', unlocked: true },
+            { title: 'Sixer Monarch', desc: 'Rolled two consecutive 6s in combat', icon: '🎲', unlocked: true },
+            { title: 'Grand Ambassador', desc: 'Invited 3+ warriors via referral link', icon: '🤝', unlocked: true },
+            { title: 'Iron Bastion', desc: 'Complete match without losing a token', icon: '🛡️', unlocked: false },
+          ].map((badge, idx) => (
+            <div
+              key={idx}
+              className={`p-3.5 rounded-2xl border transition-all flex items-start gap-3 ${
+                badge.unlocked
+                  ? 'bg-amber-950/25 border-royal-gold/50 shadow-sm'
+                  : 'bg-slate-900/40 border-slate-800 opacity-60'
+              }`}
+            >
+              <div className="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-xl shrink-0">
+                {badge.icon}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between mb-0.5">
+                  <span className="text-xs font-bold text-white truncate">{badge.title}</span>
+                  {badge.unlocked ? (
+                    <span className="text-[10px] text-royal-gold font-bold bg-royal-gold/15 px-1.5 py-0.5 rounded">UNLOCKED</span>
+                  ) : (
+                    <span className="text-[10px] text-slate-500 font-bold bg-slate-800 px-1.5 py-0.5 rounded">LOCKED</span>
+                  )}
+                </div>
+                <p className="text-[11px] text-slate-400 leading-snug">{badge.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Recent Match History Logs */}
+      <div className="rounded-3xl glass-panel p-5 sm:p-6 border border-royal-border/80 shadow-card-glow">
+        <div className="flex items-center gap-2 mb-4 pb-3 border-b border-royal-border/60">
+          <Flame className="w-4 h-4 text-amber-500" />
+          <h2 className="font-royal text-lg font-bold text-white">
+            Recent Match History
+          </h2>
+        </div>
+
+        <div className="space-y-2">
+          {[
+            { opponent: 'Queen_Maharani', oppAvatar: '👸', mode: '1v1 Quick Duel', result: 'WIN', prize: '+190', date: '2 hours ago' },
+            { opponent: 'Knight_Vikram', oppAvatar: '⚔️', mode: '1v1 Quick Duel', result: 'WIN', prize: '+475', date: 'Yesterday' },
+            { opponent: 'Master_Arjun', oppAvatar: '🏹', mode: '1v1 Quick Duel', result: 'LOSS', prize: '-250', date: 'Yesterday' },
+            { opponent: 'Ludo_Tiger', oppAvatar: '🐅', mode: 'Classic 4P Battle', result: 'WIN', prize: '+950', date: '2 days ago' },
+          ].map((m, idx) => (
+            <div
+              key={idx}
+              className="flex items-center justify-between p-3 rounded-2xl bg-slate-900/60 border border-royal-border/50 text-xs"
+            >
+              <div className="flex items-center gap-3">
+                <span className="text-xl">{m.oppAvatar}</span>
+                <div>
+                  <div className="font-bold text-white flex items-center gap-2">
+                    <span>vs {m.opponent}</span>
+                    <span className="text-[10px] text-slate-400 font-normal">({m.mode})</span>
+                  </div>
+                  <div className="text-[10px] text-slate-500">{m.date}</div>
+                </div>
+              </div>
+
+              <div className="text-right">
+                <span
+                  className={`font-black text-xs px-2 py-0.5 rounded-full inline-block mb-0.5 ${
+                    m.result === 'WIN'
+                      ? 'bg-emerald-950/70 text-emerald-400 border border-emerald-500/40'
+                      : 'bg-red-950/70 text-red-400 border border-red-500/40'
+                  }`}
+                >
+                  {m.result}
+                </span>
+                <span className="block font-mono text-[11px] font-bold text-royal-gold">
+                  🪙 {m.prize}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
     </div>
   );
 };
