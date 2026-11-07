@@ -75,7 +75,7 @@ async function runTestSuite() {
 
   // TEST SUITE 3: Authoritative Ludo Game State Machine & Rules
   console.log('\n⚔️ TEST SUITE 3: Authoritative Ludo Game Engine Rules');
-  
+
   let stateUpdateEmitted = false;
   const game = new LudoGame(
     'test_room_1',
@@ -125,7 +125,7 @@ async function runTestSuite() {
 
   // TEST SUITE 4: Token Capture & Bonus Turn Verification
   console.log('\n💥 TEST SUITE 4: Opponent Capture & Bonus Turn Logic');
-  
+
   // Set up a mock scenario: Red token at step 4 (perimeter pos 4), Yellow token on perimeter pos 4 (unsafe)
   const redToken = redPlayer.tokens[1];
   redToken.isYard = false;
@@ -142,7 +142,7 @@ async function runTestSuite() {
   yellowToken.position = 4;
   redToken.stepCount = 2;
   redToken.position = 2;
-  
+
   // Force dice roll to 2 for deterministic test
   game.state.currentTurnColor = 'red';
   game.state.diceValue = 2;
