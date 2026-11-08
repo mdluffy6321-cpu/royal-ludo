@@ -96,11 +96,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className={`min-h-screen flex flex-col font-sans ${
-      currentTab === 'landing' && !activeGame && !activeLobbyCode
-        ? ''
-        : 'bg-royal-dark text-slate-100 selection:bg-royal-gold selection:text-royal-dark'
-    }`}>
+    <div className="min-h-screen flex flex-col font-sans bg-[#F7F4ED] text-[#000000]">
       
       {/* 1. Testing Bar for Demo Multi-Account Switcher */}
       {currentTab !== 'landing' && <DemoSwitcherBanner />}

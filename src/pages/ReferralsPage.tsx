@@ -36,38 +36,38 @@ export const ReferralsPage: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
+    <div className="max-w-4xl mx-auto px-4 py-8 space-y-6">
       
       {/* Header */}
       <div>
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-royal-gold/15 border border-royal-gold/30 text-royal-gold text-xs font-bold uppercase tracking-wider mb-2">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FFFFFF] border border-[#DDD6CB] text-[#000000] text-xs font-bold uppercase tracking-[0.08em] mb-2">
           <Gift className="w-3.5 h-3.5" />
-          <span>Royal Ambassador Program</span>
+          <span>Ambassador Program</span>
         </div>
-        <h1 className="font-royal text-2xl sm:text-3xl font-black gold-gradient-text">
+        <h1 className="text-2xl sm:text-3xl font-black text-[#000000] tracking-tight">
           Invite Friends & Earn Coins
         </h1>
-        <p className="text-xs text-slate-300 mt-0.5">
-          Share your royal link. When friends register, both of you earn instant demonstration coin bonuses!
+        <p className="text-xs text-[#6E6962] mt-0.5">
+          Share your referral link. When friends register, both of you earn instant demonstration coin bonuses!
         </p>
       </div>
 
       {/* Main Referral Share Box */}
-      <div className="rounded-3xl glass-panel-gold p-6 sm:p-8 border border-royal-gold/40 shadow-card-glow text-center">
+      <div className="rounded-3xl bg-[#FFFFFF] border border-[#DDD6CB] p-6 sm:p-8 text-center">
         
         {/* Referral Code Block */}
         <div className="max-w-xs mx-auto mb-6">
-          <span className="text-[10px] uppercase font-bold text-amber-300 tracking-wider block mb-1">
+          <span className="text-[10px] uppercase font-bold text-[#6E6962] tracking-wider block mb-1">
             Your Exclusive Referral Code
           </span>
-          <div className="p-3.5 rounded-2xl bg-slate-950/80 border-2 border-dashed border-royal-gold/60 text-2xl font-black tracking-widest text-royal-gold font-mono flex items-center justify-center gap-3">
+          <div className="p-3.5 rounded-2xl bg-[#F7F4ED] border-2 border-dashed border-[#DDD6CB] text-2xl font-black tracking-widest text-[#000000] font-mono flex items-center justify-center gap-3">
             <span>{referralCode}</span>
             <button
               onClick={handleCopyCode}
               title="Copy Referral Code"
-              className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300"
+              className="p-1.5 rounded-full bg-[#FFFFFF] border border-[#DDD6CB] hover:border-[#000000] text-[#000000] transition-colors"
             >
-              {copiedCode ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+              {copiedCode ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
             </button>
           </div>
         </div>
@@ -76,15 +76,15 @@ export const ReferralsPage: React.FC = () => {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 max-w-md mx-auto mb-8">
           <button
             onClick={handleCopyLink}
-            className="w-full sm:flex-1 py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 border border-slate-700 flex items-center justify-center gap-2 transition-colors"
+            className="w-full sm:flex-1 py-3 px-4 rounded-full bg-[#F7F4ED] hover:border-[#000000] text-xs font-bold text-[#000000] border border-[#DDD6CB] flex items-center justify-center gap-2 transition-all uppercase tracking-[0.08em]"
           >
-            {copiedLink ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+            {copiedLink ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
             <span>{copiedLink ? 'Link Copied!' : 'Copy Invite Link'}</span>
           </button>
 
           <button
             onClick={handleShareWhatsApp}
-            className="w-full sm:flex-1 py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center justify-center gap-2 transition-colors shadow-sm"
+            className="w-full sm:flex-1 py-3 px-4 rounded-full bg-[#000000] hover:opacity-85 text-[#F7F4ED] text-xs font-bold flex items-center justify-center gap-2 transition-all uppercase tracking-[0.08em]"
           >
             <Share2 className="w-4 h-4" />
             <span>Share on WhatsApp</span>
@@ -92,63 +92,63 @@ export const ReferralsPage: React.FC = () => {
         </div>
 
         {/* Reward Steps */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-6 border-t border-royal-border/60 text-left">
-          <div className="p-4 rounded-2xl bg-slate-900/60 border border-royal-border">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-6 border-t border-[#DDD6CB] text-left">
+          <div className="p-4 rounded-2xl bg-[#F7F4ED] border border-[#DDD6CB]">
             <span className="text-lg mb-1 block">1️⃣</span>
-            <h3 className="font-bold text-xs text-white mb-0.5">Share Your Code</h3>
-            <p className="text-[11px] text-slate-400">Send your code or link to your friends or gaming groups.</p>
+            <h3 className="font-bold text-xs text-[#000000] mb-0.5">Share Your Code</h3>
+            <p className="text-[11px] text-[#6E6962]">Send your code or link to your friends or gaming groups.</p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-slate-900/60 border border-royal-border">
+          <div className="p-4 rounded-2xl bg-[#F7F4ED] border border-[#DDD6CB]">
             <span className="text-lg mb-1 block">2️⃣</span>
-            <h3 className="font-bold text-xs text-white mb-0.5">Friend Registers</h3>
-            <p className="text-[11px] text-slate-400">They receive an instant +500 Virtual Coin welcome reward.</p>
+            <h3 className="font-bold text-xs text-[#000000] mb-0.5">Friend Registers</h3>
+            <p className="text-[11px] text-[#6E6962]">They receive an instant +500 Virtual Coin welcome reward.</p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-slate-900/60 border border-royal-border">
+          <div className="p-4 rounded-2xl bg-[#F7F4ED] border border-[#DDD6CB]">
             <span className="text-lg mb-1 block">3️⃣</span>
-            <h3 className="font-bold text-xs text-white mb-0.5">You Get Rewarded</h3>
-            <p className="text-[11px] text-slate-400">You receive +500 bonus coins credited directly to your passbook!</p>
+            <h3 className="font-bold text-xs text-[#000000] mb-0.5">You Get Rewarded</h3>
+            <p className="text-[11px] text-[#6E6962]">You receive +500 bonus coins credited directly to your passbook!</p>
           </div>
         </div>
 
       </div>
 
       {/* Invited Friends List */}
-      <div className="rounded-3xl glass-panel p-5 border border-royal-border/80 shadow-card-glow">
-        <div className="flex items-center justify-between mb-4 pb-3 border-b border-royal-border/60">
+      <div className="rounded-3xl bg-[#FFFFFF] border border-[#DDD6CB] p-5">
+        <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#DDD6CB]">
           <div className="flex items-center gap-2">
-            <Users className="w-4 h-4 text-royal-gold" />
-            <h2 className="font-royal text-lg font-bold text-white">
+            <Users className="w-4 h-4 text-[#000000]" />
+            <h2 className="text-base font-black text-[#000000]">
               Invited Nobles (3)
             </h2>
           </div>
-          <span className="text-xs font-mono font-bold text-royal-gold">
+          <span className="text-xs font-mono font-bold text-[#000000]">
             +1,500 Coins Earned
           </span>
         </div>
 
         <div className="space-y-2">
           {[
-            { name: 'Queen_Maharani', tag: '#RL-10002', avatar: '👸', date: '2024-02-15', reward: '+500' },
-            { name: 'Knight_Vikram', tag: '#RL-10003', avatar: '⚔️', date: '2024-03-01', reward: '+500' },
-            { name: 'Player_7721', tag: '#RL-89120', avatar: '🏹', date: '2024-03-18', reward: '+500' },
+            { name: 'Queen Maharani', tag: '#RL-10002', avatar: '👸', date: '2024-02-15', reward: '+500' },
+            { name: 'Knight Vikram', tag: '#RL-10003', avatar: '⚔️', date: '2024-03-01', reward: '+500' },
+            { name: 'Master Arjun', tag: '#RL-89120', avatar: '🏹', date: '2024-03-18', reward: '+500' },
           ].map((friend, idx) => (
             <div
               key={idx}
-              className="flex items-center justify-between p-3 rounded-2xl bg-slate-900/70 border border-royal-border/50"
+              className="flex items-center justify-between p-3 rounded-2xl bg-[#F7F4ED] border border-[#DDD6CB]"
             >
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-lg">
+                <div className="w-9 h-9 rounded-xl bg-[#FFFFFF] border border-[#DDD6CB] flex items-center justify-center text-lg">
                   {friend.avatar}
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-white">{friend.name}</div>
-                  <div className="text-[10px] text-slate-400 font-mono">{friend.tag} • Joined {friend.date}</div>
+                  <div className="text-xs font-bold text-[#000000]">{friend.name}</div>
+                  <div className="text-[10px] text-[#6E6962] font-mono">{friend.tag} • Joined {friend.date}</div>
                 </div>
               </div>
 
-              <span className="text-xs font-extrabold text-emerald-400 font-mono">
+              <span className="text-xs font-bold text-emerald-600 font-mono">
                 {friend.reward} Coins
               </span>
             </div>
@@ -159,4 +159,3 @@ export const ReferralsPage: React.FC = () => {
     </div>
   );
 };
-

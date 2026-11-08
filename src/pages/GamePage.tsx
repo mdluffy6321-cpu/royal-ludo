@@ -7,7 +7,7 @@ import { LudoBoard } from '../components/game/LudoBoard';
 import { Dice3D } from '../components/game/Dice3D';
 import { PlayerHUD } from '../components/game/PlayerHUD';
 import { VictoryModal } from '../components/game/VictoryModal';
-import { ArrowLeft, MessageSquare, Volume2, VolumeX, Shield, Sparkles } from 'lucide-react';
+import { ArrowLeft, Sparkles } from 'lucide-react';
 
 interface GamePageProps {
   roomId: string;
@@ -20,7 +20,6 @@ export const GamePage: React.FC<GamePageProps> = ({ roomId, gameMode, onExitGame
   const { playClick, playDiceRoll, playTokenStep, playCapture, playTimerTick, playSixRolled } = useSound();
   const { socket, connected } = useSocket();
 
-  // Local simulated fallback state if offline
   const [gameState, setGameState] = useState<GameRoomState>(() => {
     const is1v1 = gameMode === '1v1' || gameMode === 'ai';
     const p1: Player = {
@@ -96,7 +95,6 @@ export const GamePage: React.FC<GamePageProps> = ({ roomId, gameMode, onExitGame
   const [activeReaction, setActiveReaction] = useState<string | null>(null);
   const [confirmExitOpen, setConfirmExitOpen] = useState(false);
 
-  // Sync with Server Authoritative Engine or BroadcastChannel (cross-tab Vercel)
   useEffect(() => {
     if (socket && connected) {
       socket.emit('JOIN_GAME_ROOM', { roomId });
@@ -115,7 +113,6 @@ export const GamePage: React.FC<GamePageProps> = ({ roomId, gameMode, onExitGame
         socket.off('EMOJI_REACTION');
       };
     } else if (typeof window !== 'undefined' && window.BroadcastChannel) {
-      // Cross-tab real-time sync on standalone Vercel
       const channel = new BroadcastChannel(`royal_game_${roomId}`);
       channel.onmessage = (event) => {
         const data = event.data;
@@ -130,14 +127,12 @@ export const GamePage: React.FC<GamePageProps> = ({ roomId, gameMode, onExitGame
     }
   }, [socket, connected, roomId]);
 
-  // Turn timer countdown in standalone mode
   useEffect(() => {
     if (connected || gameState.status !== 'in_progress') return;
 
     const timer = setInterval(() => {
       setGameState((prev: GameRoomState) => {
         if (prev.turnTimeout <= 1) {
-          // Timeout: switch turn or auto-move
           const colors: LudoColor[] = prev.mode === '1v1' ? ['red', 'yellow'] : ['red', 'green', 'yellow', 'blue'];
           const nextIdx = (colors.indexOf(prev.currentTurnColor) + 1) % colors.length;
           return {
@@ -155,7 +150,6 @@ export const GamePage: React.FC<GamePageProps> = ({ roomId, gameMode, onExitGame
     return () => clearInterval(timer);
   }, [connected, gameState.status, gameState.currentTurnColor]);
 
-  // Turn timer audio tick
   useEffect(() => {
     if (gameState.turnTimeout <= 5 && gameState.turnTimeout > 0 && gameState.status === 'in_progress') {
       playTimerTick();
@@ -166,12 +160,10 @@ export const GamePage: React.FC<GamePageProps> = ({ roomId, gameMode, onExitGame
   const isMyTurn = currentPlayer.id === user?.id;
   const canRoll = isMyTurn && gameState.diceValue === null && !gameState.diceRolling && gameState.status === 'in_progress';
 
-  // Automated Opponent/Bot Turn in Standalone Vercel Mode
   useEffect(() => {
     if (connected || gameState.status !== 'in_progress') return;
-    if (currentPlayer.id === user?.id) return; // User's turn
+    if (currentPlayer.id === user?.id) return;
 
-    // Opponent/Bot Turn Simulation
     const botRollTimer = setTimeout(() => {
       const roll = Math.floor(Math.random() * 6) + 1;
       playDiceRoll();
@@ -185,7 +177,6 @@ export const GamePage: React.FC<GamePageProps> = ({ roomId, gameMode, onExitGame
         );
 
         if (validTokens.length === 0) {
-          // No moves possible, pass turn after 1s
           setTimeout(() => {
             setGameState((pState: GameRoomState) => {
               const colors: LudoColor[] = pState.mode === '1v1' ? ['red', 'yellow'] : ['red', 'green', 'yellow', 'blue'];
@@ -203,7 +194,6 @@ export const GamePage: React.FC<GamePageProps> = ({ roomId, gameMode, onExitGame
           return { ...prev, diceValue: roll, validTokenIds: [] };
         }
 
-        // Choose best token: unlock from yard if 6, else advanced token
         const chosenToken = validTokens.find(t => t.isYard) || validTokens[0];
 
         setTimeout(() => {
@@ -256,7 +246,6 @@ export const GamePage: React.FC<GamePageProps> = ({ roomId, gameMode, onExitGame
     if (socket && connected) {
       socket.emit('ROLL_DICE', { roomId, playerId: user.id });
     } else {
-      // Local standalone Vercel engine
       const roll = Math.floor(Math.random() * 6) + 1;
       const valid = currentPlayer.tokens.filter((t: TokenPiece) => (t.isYard && roll === 6) || (!t.isYard && t.stepCount + roll <= 57));
       
@@ -268,7 +257,6 @@ export const GamePage: React.FC<GamePageProps> = ({ roomId, gameMode, onExitGame
 
       setGameState(nextState);
 
-      // Broadcast across tabs if open
       if (typeof window !== 'undefined' && window.BroadcastChannel) {
         const channel = new BroadcastChannel(`royal_game_${roomId}`);
         channel.postMessage({ type: 'SYNC_STATE', state: nextState });
@@ -306,7 +294,6 @@ export const GamePage: React.FC<GamePageProps> = ({ roomId, gameMode, onExitGame
     if (socket && connected) {
       socket.emit('MOVE_TOKEN', { roomId, playerId: user.id, tokenId });
     } else {
-      // Local standalone Vercel move logic
       setGameState((prev: GameRoomState) => {
         const roll = prev.diceValue || 6;
         const player = prev.players.find((p: Player) => p.id === user.id)!;
@@ -375,20 +362,20 @@ export const GamePage: React.FC<GamePageProps> = ({ roomId, gameMode, onExitGame
       <div className="flex items-center justify-between mb-3 px-2">
         <button
           onClick={() => setConfirmExitOpen(true)}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 border border-royal-border text-xs font-semibold text-slate-300 hover:text-white hover:border-slate-600 transition-colors"
+          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#FFFFFF] border border-[#DDD6CB] text-xs font-semibold text-[#6E6962] hover:text-[#000000] hover:border-[#000000] transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Leave Match</span>
         </button>
 
         {/* Prize Pool Display */}
-        <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/40 text-royal-gold text-xs font-mono font-bold">
-          <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-          <span>Prize Pool: 🪙 {gameState.prizePool} Coins</span>
+        <div className="flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#FFFFFF] border border-[#DDD6CB] text-[#000000] text-xs font-mono font-bold">
+          <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+          <span>Prize: 🪙 {gameState.prizePool} Coins</span>
         </div>
 
         {/* Room Mode Tag */}
-        <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 font-mono bg-slate-900/80 px-2.5 py-1 rounded-lg border border-slate-800">
+        <div className="text-[11px] font-bold uppercase tracking-wider text-[#6E6962] font-mono bg-[#FFFFFF] px-3 py-1 rounded-full border border-[#DDD6CB]">
           Room: {gameState.roomCode}
         </div>
       </div>
@@ -461,15 +448,15 @@ export const GamePage: React.FC<GamePageProps> = ({ roomId, gameMode, onExitGame
       </div>
 
       {/* Bottom Controls Bar: 3D Dice Roller & Emoji Reactions */}
-      <div className="mt-4 pt-3 border-t border-royal-border/80 flex flex-col sm:flex-row items-center justify-between gap-4 max-w-xl mx-auto w-full">
+      <div className="mt-4 pt-3 border-t border-[#DDD6CB] flex flex-col sm:flex-row items-center justify-between gap-4 max-w-xl mx-auto w-full">
 
         {/* Quick Emoji Reaction Pill Bar */}
-        <div className="flex items-center gap-1.5 p-1.5 rounded-2xl bg-slate-900/80 border border-royal-border">
+        <div className="flex items-center gap-1.5 p-1.5 rounded-full bg-[#FFFFFF] border border-[#DDD6CB]">
           {['👑', '🔥', '👏', '😱', '🤣', '💀'].map((emoji) => (
             <button
               key={emoji}
               onClick={() => handleSendReaction(emoji)}
-              className="p-1.5 text-lg hover:scale-125 transition-transform active:scale-95"
+              className="p-1 text-lg hover:scale-125 transition-transform active:scale-95"
             >
               {emoji}
             </button>
@@ -508,18 +495,18 @@ export const GamePage: React.FC<GamePageProps> = ({ roomId, gameMode, onExitGame
 
       {/* Exit Confirmation Dialog */}
       {confirmExitOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-          <div className="relative w-full max-w-sm rounded-3xl glass-panel-gold p-6 text-center text-white shadow-2xl border border-royal-gold/40">
-            <h3 className="font-royal text-xl font-bold text-white mb-2">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+          <div className="relative w-full max-w-sm rounded-3xl bg-[#FFFFFF] border border-[#DDD6CB] p-6 text-center text-[#000000] shadow-xl">
+            <h3 className="text-xl font-black text-[#000000] mb-2">
               Resign Battle?
             </h3>
-            <p className="text-xs text-slate-300 mb-5">
+            <p className="text-xs text-[#6E6962] mb-5">
               Leaving the active match will forfeit the battle and award victory to your opponent.
             </p>
             <div className="flex gap-2">
               <button
                 onClick={() => setConfirmExitOpen(false)}
-                className="flex-1 py-2.5 rounded-xl bg-slate-800 text-xs font-bold text-slate-300 hover:bg-slate-700"
+                className="flex-1 py-2.5 rounded-full bg-[#F7F4ED] text-xs font-bold text-[#6E6962] hover:border-[#000000] border border-[#DDD6CB] transition-all"
               >
                 Keep Playing
               </button>
@@ -528,7 +515,7 @@ export const GamePage: React.FC<GamePageProps> = ({ roomId, gameMode, onExitGame
                   setConfirmExitOpen(false);
                   onExitGame();
                 }}
-                className="flex-1 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs font-bold uppercase"
+                className="flex-1 py-2.5 rounded-full bg-red-600 hover:bg-red-700 text-white text-xs font-bold uppercase tracking-[0.08em] transition-all"
               >
                 Forfeit & Exit
               </button>

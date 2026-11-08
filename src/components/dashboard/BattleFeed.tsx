@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { BattleChallenge } from '../../types';
 import { useAuth } from '../../context/AuthContext';
 import { useSound } from '../../context/SoundContext';
-import { Swords, Plus, Shield, Flame, Trash2, ArrowRight } from 'lucide-react';
+import { Swords, Plus, Trash2, ArrowRight } from 'lucide-react';
 
 interface BattleFeedProps {
   battles: BattleChallenge[];
@@ -28,34 +28,34 @@ export const BattleFeed: React.FC<BattleFeedProps> = ({
   });
 
   return (
-    <div className="rounded-3xl glass-panel p-4 sm:p-6 border border-royal-border/80 shadow-card-glow">
+    <div className="bg-[#FFFFFF] border border-[#DDD6CB] rounded-3xl p-4 sm:p-6">
       
       {/* Header and Controls */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-royal-border/60">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-[#DDD6CB]">
         <div>
           <div className="flex items-center gap-2">
-            <h2 className="font-royal text-xl sm:text-2xl font-black gold-gradient-text">
+            <h2 className="text-xl sm:text-2xl font-black text-[#000000] tracking-tight">
               Battle Arena
             </h2>
-            <span className="text-[10px] font-bold uppercase tracking-wider bg-red-500/20 text-red-400 border border-red-500/40 px-2 py-0.5 rounded-full animate-pulse">
-              ● Live
+            <span className="text-[10px] font-bold uppercase tracking-[0.08em] bg-[#F7F4ED] text-[#000000] border border-[#DDD6CB] px-2.5 py-0.5 rounded-full">
+              Live
             </span>
           </div>
-          <p className="text-xs text-slate-300 mt-0.5">
-            Join open challenges or set your own battle for other warriors to accept.
+          <p className="text-xs text-[#6E6962] mt-0.5">
+            Join open challenges or set your own battle.
           </p>
         </div>
 
         <div className="flex items-center gap-2 w-full sm:w-auto">
           {/* Filter Pills */}
-          <div className="flex rounded-xl bg-slate-900/80 p-1 border border-royal-border text-xs font-semibold">
+          <div className="flex rounded-full bg-[#F7F4ED] border border-[#DDD6CB] p-1 text-xs font-bold">
             <button
               onClick={() => {
                 playClick();
                 setFilter('all');
               }}
-              className={`px-3 py-1.5 rounded-lg transition-colors ${
-                filter === 'all' ? 'bg-royal-gold text-royal-dark font-bold' : 'text-slate-400 hover:text-white'
+              className={`px-3 py-1 rounded-full transition-all ${
+                filter === 'all' ? 'bg-[#000000] text-[#F7F4ED]' : 'text-[#6E6962] hover:text-[#000000]'
               }`}
             >
               All ({battles.length})
@@ -65,8 +65,8 @@ export const BattleFeed: React.FC<BattleFeedProps> = ({
                 playClick();
                 setFilter('mine');
               }}
-              className={`px-3 py-1.5 rounded-lg transition-colors ${
-                filter === 'mine' ? 'bg-royal-gold text-royal-dark font-bold' : 'text-slate-400 hover:text-white'
+              className={`px-3 py-1 rounded-full transition-all ${
+                filter === 'mine' ? 'bg-[#000000] text-[#F7F4ED]' : 'text-[#6E6962] hover:text-[#000000]'
               }`}
             >
               My Challenges
@@ -76,11 +76,11 @@ export const BattleFeed: React.FC<BattleFeedProps> = ({
                 playClick();
                 setFilter('high');
               }}
-              className={`px-3 py-1.5 rounded-lg transition-colors ${
-                filter === 'high' ? 'bg-royal-gold text-royal-dark font-bold' : 'text-slate-400 hover:text-white'
+              className={`px-3 py-1 rounded-full transition-all ${
+                filter === 'high' ? 'bg-[#000000] text-[#F7F4ED]' : 'text-[#6E6962] hover:text-[#000000]'
               }`}
             >
-              🔥 500+
+              500+
             </button>
           </div>
 
@@ -90,9 +90,9 @@ export const BattleFeed: React.FC<BattleFeedProps> = ({
               playClick();
               onOpenCreateModal();
             }}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gradient-to-r from-royal-gold to-amber-600 text-royal-dark font-bold text-xs uppercase tracking-wider shadow-gold-glow hover:opacity-95 transition-all whitespace-nowrap"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#000000] text-[#F7F4ED] font-bold text-xs uppercase tracking-[0.08em] hover:opacity-85 transition-all whitespace-nowrap"
           >
-            <Plus className="w-4 h-4 stroke-[3]" />
+            <Plus className="w-4 h-4 stroke-[2.5]" />
             <span>Set Battle</span>
           </button>
         </div>
@@ -100,21 +100,21 @@ export const BattleFeed: React.FC<BattleFeedProps> = ({
 
       {/* Battles List */}
       {filteredBattles.length === 0 ? (
-        <div className="text-center py-12 px-4 rounded-2xl bg-slate-900/40 border border-dashed border-slate-800">
-          <div className="w-12 h-12 rounded-2xl bg-amber-500/10 text-royal-gold flex items-center justify-center mx-auto mb-3 text-2xl">
+        <div className="text-center py-12 px-4 rounded-2xl bg-[#F7F4ED] border border-dashed border-[#DDD6CB]">
+          <div className="w-12 h-12 rounded-2xl bg-[#FFFFFF] border border-[#DDD6CB] text-[#000000] flex items-center justify-center mx-auto mb-3 text-2xl">
             ⚔️
           </div>
-          <h3 className="font-royal text-lg font-bold text-white mb-1">
+          <h3 className="text-base font-bold text-[#000000] mb-1">
             No Active Battles in this category
           </h3>
-          <p className="text-xs text-slate-400 max-w-sm mx-auto mb-4">
-            Be the first to challenge the arena! Click "Set Battle" to create an open room.
+          <p className="text-xs text-[#6E6962] max-w-sm mx-auto mb-4">
+            Be the first to challenge the arena. Click "Set Battle" to create an open room.
           </p>
           <button
             onClick={onOpenCreateModal}
-            className="px-4 py-2 rounded-xl bg-royal-gold text-royal-dark font-bold text-xs uppercase tracking-wider shadow-gold-glow hover:opacity-90"
+            className="px-5 py-2.5 rounded-full bg-[#000000] text-[#F7F4ED] font-bold text-xs uppercase tracking-[0.08em] hover:opacity-85"
           >
-            Set First Battle (+50 Coins)
+            Set First Battle
           </button>
         </div>
       ) : (
@@ -126,17 +126,16 @@ export const BattleFeed: React.FC<BattleFeedProps> = ({
                 key={battle.id}
                 className={`relative rounded-2xl p-4 border transition-all ${
                   isMyBattle
-                    ? 'bg-gradient-to-br from-[#1F1408] to-[#0A0D1A] border-royal-gold shadow-[0_0_20px_rgba(245,158,11,0.3)]'
-                    : 'bg-gradient-to-br from-[#0F172E] to-[#070B19] border-royal-gold/30 hover:border-royal-gold/60 hover:shadow-[0_4px_20px_rgba(0,0,0,0.5)]'
+                    ? 'bg-[#F7F4ED] border-[#000000]'
+                    : 'bg-[#FFFFFF] border-[#DDD6CB] hover:border-[#000000]'
                 }`}
               >
                 {/* Top Badge info */}
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-950/80 text-amber-300 border border-royal-gold/40">
-                    {battle.mode === '1v1' ? '⚔️ 1v1 Battle' : '👑 4-Player'}
+                  <span className="text-[10px] font-bold uppercase tracking-[0.08em] px-2.5 py-0.5 rounded-full bg-[#F7F4ED] text-[#000000] border border-[#DDD6CB]">
+                    {battle.mode === '1v1' ? '1v1 Duel' : '4-Player'}
                   </span>
-                  <div className="flex items-center gap-1 text-xs font-mono font-black text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded-md border border-amber-500/30">
-                    <Flame className="w-3.5 h-3.5 text-amber-400" />
+                  <div className="flex items-center gap-1 text-xs font-mono font-bold text-[#000000] bg-[#F7F4ED] px-2 py-0.5 rounded-full border border-[#DDD6CB]">
                     <span>Win: 🪙 {battle.prizePool}</span>
                   </div>
                 </div>
@@ -144,14 +143,14 @@ export const BattleFeed: React.FC<BattleFeedProps> = ({
                 {/* Creator Profile */}
                 <div className="flex items-center justify-between gap-3 mb-4">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-purple-900 to-slate-900 border border-royal-gold/40 flex items-center justify-center text-xl shadow-md">
+                    <div className="w-10 h-10 rounded-xl bg-[#F7F4ED] border border-[#DDD6CB] flex items-center justify-center text-lg">
                       {battle.creatorAvatar || '👑'}
                     </div>
                     <div>
-                      <div className="text-sm font-bold text-white truncate max-w-[130px]">
+                      <div className="text-sm font-bold text-[#000000] truncate max-w-[130px]">
                         {battle.creatorName.replace(/_/g, ' ')}
                       </div>
-                      <div className="text-[10px] text-amber-400 font-mono">
+                      <div className="text-[10px] text-[#6E6962] font-mono">
                         {battle.creatorTag}
                       </div>
                     </div>
@@ -159,19 +158,19 @@ export const BattleFeed: React.FC<BattleFeedProps> = ({
 
                   {/* Stake display */}
                   <div className="text-right">
-                    <span className="text-[9px] text-slate-400 block uppercase font-bold tracking-wider">Stake</span>
-                    <span className="text-base font-black text-white font-mono">
+                    <span className="text-[9px] text-[#6E6962] block uppercase font-bold tracking-wider">Stake</span>
+                    <span className="text-base font-black text-[#000000] font-mono">
                       🪙 {battle.entryFee}
                     </span>
                   </div>
                 </div>
 
-                {/* Action button: Accept vs Cancel */}
+                {/* Action button */}
                 {isMyBattle ? (
                   <div className="flex items-center gap-2">
-                    <div className="flex-1 text-center py-2 px-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-[11px] font-semibold text-amber-300 flex items-center justify-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
-                      <span>Waiting Opponent...</span>
+                    <div className="flex-1 text-center py-2 px-3 rounded-full bg-[#F7F4ED] border border-[#DDD6CB] text-[11px] font-medium text-[#6E6962] flex items-center justify-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-[#000000] animate-pulse"></span>
+                      <span>Waiting for Opponent...</span>
                     </div>
                     <button
                       onClick={() => {
@@ -179,7 +178,7 @@ export const BattleFeed: React.FC<BattleFeedProps> = ({
                         onCancelBattle(battle.id);
                       }}
                       title="Cancel Battle and refund coins"
-                      className="p-2 rounded-xl bg-red-950/60 border border-red-500/40 text-red-400 hover:text-white hover:bg-red-900 transition-colors"
+                      className="p-2 rounded-full bg-[#F7F4ED] border border-[#DDD6CB] text-red-500 hover:text-white hover:bg-red-500 transition-colors"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -190,7 +189,7 @@ export const BattleFeed: React.FC<BattleFeedProps> = ({
                       playClick();
                       onAcceptBattle(battle);
                     }}
-                    className="w-full py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs uppercase tracking-wider shadow-sm flex items-center justify-center gap-2 transition-all hover:scale-[1.02]"
+                    className="w-full py-2.5 rounded-full bg-[#000000] hover:opacity-85 text-[#F7F4ED] font-bold text-xs uppercase tracking-[0.08em] flex items-center justify-center gap-2 transition-all"
                   >
                     <span>Accept Challenge</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -204,4 +203,3 @@ export const BattleFeed: React.FC<BattleFeedProps> = ({
     </div>
   );
 };
-

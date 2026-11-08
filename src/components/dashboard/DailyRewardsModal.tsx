@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useSound } from '../../context/SoundContext';
-import { X, Sparkles, Coins, Gift, CheckCircle, Award } from 'lucide-react';
+import { X, Sparkles, Coins, Gift, CheckCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 interface DailyRewardsModalProps {
@@ -10,14 +10,14 @@ interface DailyRewardsModalProps {
 }
 
 const WHEEL_SEGMENTS = [
-  { coins: 100, label: '100 Coins', color: '#EF4444' },
-  { coins: 250, label: '250 Coins', color: '#3B82F6' },
-  { coins: 50, label: '50 Coins', color: '#10B981' },
-  { coins: 500, label: '500 Coins', color: '#F59E0B' },
-  { coins: 150, label: '150 Coins', color: '#8B5CF6' },
-  { coins: 75, label: '75 Coins', color: '#EC4899' },
-  { coins: 1000, label: '👑 1,000!', color: '#FBBF24' },
-  { coins: 200, label: '200 Coins', color: '#06B6D4' },
+  { coins: 100, label: '100 Coins', color: '#4A87D6' },
+  { coins: 250, label: '250 Coins', color: '#D4A7D7' },
+  { coins: 50, label: '50 Coins', color: '#B7B39B' },
+  { coins: 500, label: '500 Coins', color: '#E3C0BD' },
+  { coins: 150, label: '150 Coins', color: '#4A87D6' },
+  { coins: 75, label: '75 Coins', color: '#D4A7D7' },
+  { coins: 1000, label: '👑 1,000!', color: '#B7B39B' },
+  { coins: 200, label: '200 Coins', color: '#E3C0BD' },
 ];
 
 const STREAK_DAYS = [
@@ -47,11 +47,9 @@ export const DailyRewardsModal: React.FC<DailyRewardsModalProps> = ({ isOpen, on
     playClick();
     setSpinning(true);
 
-    // Pick random segment (0..7)
     const prizeIndex = Math.floor(Math.random() * WHEEL_SEGMENTS.length);
     const selected = WHEEL_SEGMENTS[prizeIndex];
 
-    // Compute extra full turns (5-8 turns) + target angle
     const degreesPerSegment = 360 / WHEEL_SEGMENTS.length;
     const targetOffset = 360 - (prizeIndex * degreesPerSegment + degreesPerSegment / 2);
     const extraSpins = 360 * 5;
@@ -89,8 +87,8 @@ export const DailyRewardsModal: React.FC<DailyRewardsModalProps> = ({ isOpen, on
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="relative w-full max-w-lg rounded-3xl glass-panel-gold p-6 text-white shadow-2xl border border-royal-gold/40">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="relative w-full max-w-lg rounded-3xl bg-[#FFFFFF] border border-[#DDD6CB] p-6 text-[#000000] shadow-xl">
         
         {/* Close button */}
         <button
@@ -98,36 +96,36 @@ export const DailyRewardsModal: React.FC<DailyRewardsModalProps> = ({ isOpen, on
             playClick();
             onClose();
           }}
-          className="absolute top-4 right-4 p-2 rounded-full bg-slate-800/80 text-slate-300 hover:text-white hover:bg-slate-700 transition-colors"
+          className="absolute top-4 right-4 p-2 rounded-full bg-[#F7F4ED] border border-[#DDD6CB] text-[#6E6962] hover:text-[#000000] hover:border-[#000000] transition-colors"
         >
-          <X className="w-5 h-5" />
+          <X className="w-4 h-4" />
         </button>
 
         {/* Modal Header */}
         <div className="text-center mb-5">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-royal-gold/15 border border-royal-gold/30 text-royal-gold text-xs font-bold uppercase tracking-wider mb-2">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F7F4ED] border border-[#DDD6CB] text-[#000000] text-xs font-bold uppercase tracking-[0.08em] mb-2">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Royal Daily Rewards</span>
+            <span>Daily Rewards</span>
           </div>
-          <h2 className="font-royal text-2xl font-black gold-gradient-text">
+          <h2 className="text-2xl font-black text-[#000000] tracking-tight">
             Free Virtual Coins
           </h2>
-          <p className="text-xs text-slate-300 mt-1">
+          <p className="text-xs text-[#6E6962] mt-1">
             Claim your daily bonus rewards to play non-stop in the arena!
           </p>
         </div>
 
         {/* Tabs: Spin Wheel vs 7-Day Streak */}
-        <div className="flex rounded-xl bg-slate-900/80 p-1 border border-royal-border mb-6">
+        <div className="flex rounded-full bg-[#F7F4ED] border border-[#DDD6CB] p-1 mb-6">
           <button
             onClick={() => {
               playClick();
               setActiveTab('wheel');
             }}
-            className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-bold transition-all ${
+            className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-full text-xs font-bold transition-all ${
               activeTab === 'wheel'
-                ? 'bg-gradient-to-r from-royal-gold to-amber-600 text-royal-dark shadow-md'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-[#000000] text-[#F7F4ED]'
+                : 'text-[#6E6962] hover:text-[#000000]'
             }`}
           >
             <Sparkles className="w-4 h-4" />
@@ -138,10 +136,10 @@ export const DailyRewardsModal: React.FC<DailyRewardsModalProps> = ({ isOpen, on
               playClick();
               setActiveTab('streak');
             }}
-            className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-bold transition-all ${
+            className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-full text-xs font-bold transition-all ${
               activeTab === 'streak'
-                ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-[#000000] text-[#F7F4ED]'
+                : 'text-[#6E6962] hover:text-[#000000]'
             }`}
           >
             <Gift className="w-4 h-4" />
@@ -155,20 +153,17 @@ export const DailyRewardsModal: React.FC<DailyRewardsModalProps> = ({ isOpen, on
             
             {/* The Wheel */}
             <div className="relative w-64 h-64 my-2">
-              {/* Pointer indicator */}
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 -mt-3 z-20 w-0 h-0 border-l-[14px] border-l-transparent border-r-[14px] border-r-transparent border-t-[22px] border-t-amber-400 drop-shadow-[0_2px_8px_rgba(245,158,11,0.8)]" />
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -mt-3 z-20 w-0 h-0 border-l-[14px] border-l-transparent border-r-[14px] border-r-transparent border-t-[22px] border-t-[#000000]" />
 
-              {/* Wheel Body */}
               <div 
-                className="w-full h-full rounded-full border-4 border-amber-500 shadow-gold-glow relative overflow-hidden transition-transform duration-[4000ms] ease-out"
+                className="w-full h-full rounded-full border-4 border-[#000000] relative overflow-hidden transition-transform duration-[4000ms] ease-out shadow-md"
                 style={{
                   transform: `rotate(${spinRotation}deg)`,
-                  background: 'conic-gradient(#EF4444 0% 12.5%, #3B82F6 12.5% 25%, #10B981 25% 37.5%, #F59E0B 37.5% 50%, #8B5CF6 50% 62.5%, #EC4899 62.5% 75%, #FBBF24 75% 87.5%, #06B6D4 87.5% 100%)'
+                  background: 'conic-gradient(#4A87D6 0% 12.5%, #D4A7D7 12.5% 25%, #B7B39B 25% 37.5%, #E3C0BD 37.5% 50%, #4A87D6 50% 62.5%, #D4A7D7 62.5% 75%, #B7B39B 75% 87.5%, #E3C0BD 87.5% 100%)'
                 }}
               >
-                {/* Center hub */}
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <div className="w-16 h-16 rounded-full bg-royal-dark border-4 border-royal-gold shadow-lg flex items-center justify-center text-lg z-10 font-royal font-black text-royal-gold">
+                  <div className="w-16 h-16 rounded-full bg-[#FFFFFF] border-4 border-[#000000] shadow flex items-center justify-center text-lg z-10 font-black text-[#000000]">
                     👑
                   </div>
                 </div>
@@ -178,17 +173,17 @@ export const DailyRewardsModal: React.FC<DailyRewardsModalProps> = ({ isOpen, on
             {/* Spin result / trigger button */}
             {wonPrize !== null ? (
               <div className="mt-4 text-center animate-in zoom-in-95 duration-200">
-                <div className="text-sm font-semibold text-emerald-400 flex items-center justify-center gap-1.5 mb-1">
+                <div className="text-sm font-semibold text-emerald-600 flex items-center justify-center gap-1.5 mb-1">
                   <CheckCircle className="w-4 h-4" />
                   <span>Congratulations!</span>
                 </div>
-                <div className="text-2xl font-black text-royal-gold font-royal flex items-center justify-center gap-2">
-                  <Coins className="w-6 h-6" />
+                <div className="text-2xl font-black text-[#000000] flex items-center justify-center gap-2">
+                  <Coins className="w-6 h-6 text-amber-500" />
                   <span>+{wonPrize} Virtual Coins Added!</span>
                 </div>
                 <button
                   onClick={onClose}
-                  className="mt-3 px-6 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 transition-colors"
+                  className="mt-3 px-6 py-2 rounded-full bg-[#000000] text-xs font-bold text-[#F7F4ED] hover:opacity-85 transition-opacity"
                 >
                   Awesome, Close
                 </button>
@@ -197,7 +192,7 @@ export const DailyRewardsModal: React.FC<DailyRewardsModalProps> = ({ isOpen, on
               <button
                 onClick={handleSpin}
                 disabled={spinning}
-                className="mt-4 px-8 py-3 rounded-2xl bg-gradient-to-r from-royal-gold via-amber-500 to-amber-600 text-royal-dark font-royal font-extrabold text-sm uppercase tracking-wider shadow-gold-glow hover:scale-105 active:scale-95 transition-all disabled:opacity-60"
+                className="mt-4 px-8 py-3 rounded-full bg-[#000000] text-[#F7F4ED] font-bold text-sm uppercase tracking-[0.08em] hover:opacity-85 active:scale-95 transition-all disabled:opacity-50"
               >
                 {spinning ? 'Rolling the Wheel...' : 'Spin the Wheel (Free)'}
               </button>
@@ -212,19 +207,19 @@ export const DailyRewardsModal: React.FC<DailyRewardsModalProps> = ({ isOpen, on
               {STREAK_DAYS.slice(0, 4).map((item) => (
                 <div
                   key={item.day}
-                  className={`p-2.5 rounded-xl text-center border transition-all ${
+                  className={`p-2.5 rounded-2xl text-center border transition-all ${
                     item.claimed
-                      ? 'bg-emerald-950/40 border-emerald-500/40 text-emerald-300'
+                      ? 'bg-emerald-50 border-emerald-300 text-emerald-700'
                       : item.current
-                      ? 'bg-amber-950/60 border-amber-400 shadow-gold-glow scale-105'
-                      : 'bg-slate-900/60 border-slate-800 text-slate-400'
+                      ? 'bg-[#F7F4ED] border-[#000000] scale-105'
+                      : 'bg-[#FFFFFF] border-[#DDD6CB] text-[#6E6962]'
                   }`}
                 >
-                  <span className="text-[10px] font-bold block uppercase text-slate-400">Day {item.day}</span>
+                  <span className="text-[10px] font-bold block uppercase text-[#6E6962]">Day {item.day}</span>
                   <div className="my-1 text-base">
                     {item.claimed ? '✅' : '🪙'}
                   </div>
-                  <span className="text-xs font-extrabold text-royal-gold">+{item.coins}</span>
+                  <span className="text-xs font-black text-[#000000]">+{item.coins}</span>
                 </div>
               ))}
             </div>
@@ -233,17 +228,17 @@ export const DailyRewardsModal: React.FC<DailyRewardsModalProps> = ({ isOpen, on
               {STREAK_DAYS.slice(4).map((item) => (
                 <div
                   key={item.day}
-                  className={`p-2.5 rounded-xl text-center border ${
+                  className={`p-2.5 rounded-2xl text-center border ${
                     item.day === 7
-                      ? 'bg-gradient-to-br from-amber-950 to-purple-950 border-amber-500/60 col-span-1 shadow-gold-glow'
-                      : 'bg-slate-900/60 border-slate-800 text-slate-400'
+                      ? 'bg-[#F7F4ED] border-[#000000] col-span-1'
+                      : 'bg-[#FFFFFF] border-[#DDD6CB] text-[#6E6962]'
                   }`}
                 >
-                  <span className="text-[10px] font-bold block uppercase text-amber-300">Day {item.day}</span>
+                  <span className="text-[10px] font-bold block uppercase text-[#000000]">Day {item.day}</span>
                   <div className="my-1 text-base">
                     {item.day === 7 ? '🎁' : '🪙'}
                   </div>
-                  <span className="text-xs font-extrabold text-royal-gold">+{item.coins}</span>
+                  <span className="text-xs font-black text-[#000000]">+{item.coins}</span>
                 </div>
               ))}
             </div>
@@ -252,10 +247,10 @@ export const DailyRewardsModal: React.FC<DailyRewardsModalProps> = ({ isOpen, on
               <button
                 onClick={handleClaimStreak}
                 disabled={streakClaimed}
-                className={`w-full py-3 rounded-2xl font-bold text-sm uppercase tracking-wider transition-all ${
+                className={`w-full py-3 rounded-full font-bold text-sm uppercase tracking-[0.08em] transition-all ${
                   streakClaimed
-                    ? 'bg-emerald-900/60 text-emerald-300 border border-emerald-500/40 cursor-default'
-                    : 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-purple-glow hover:scale-[1.02]'
+                    ? 'bg-emerald-50 text-emerald-700 border border-emerald-300 cursor-default'
+                    : 'bg-[#000000] text-[#F7F4ED] hover:opacity-85'
                 }`}
               >
                 {streakClaimed ? 'Day 3 Bonus Claimed!' : 'Claim Day 3 (+150 Coins)'}
@@ -268,4 +263,3 @@ export const DailyRewardsModal: React.FC<DailyRewardsModalProps> = ({ isOpen, on
     </div>
   );
 };
-

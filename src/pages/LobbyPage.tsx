@@ -3,7 +3,7 @@ import { useAuth, DEMO_USERS } from '../context/AuthContext';
 import { useSound } from '../context/SoundContext';
 import { useSocket } from '../context/SocketContext';
 import { Player, GameMode } from '../types';
-import { Copy, Check, Share2, Play, Users, ArrowLeft, Bot } from 'lucide-react';
+import { Copy, Check, Share2, Users, ArrowLeft, Bot } from 'lucide-react';
 
 interface LobbyPageProps {
   roomCode: string;
@@ -20,7 +20,7 @@ export const LobbyPage: React.FC<LobbyPageProps> = ({ roomCode, onStartGame, onB
   const [players, setPlayers] = useState<Partial<Player>[]>([
     {
       id: user?.id || 'host_1',
-      username: user?.username || 'King_Maharaja',
+      username: user?.username ? user.username.replace(/_/g, ' ') : 'King Maharaja',
       playerTag: user?.playerTag || '#RL-10001',
       avatar: user?.avatar || '👑',
       isReady: true,
@@ -99,31 +99,31 @@ export const LobbyPage: React.FC<LobbyPageProps> = ({ roomCode, onStartGame, onB
           playClick();
           onBackToDashboard();
         }}
-        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 border border-royal-border text-xs font-semibold text-slate-300 hover:text-white mb-6"
+        className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#FFFFFF] border border-[#DDD6CB] text-xs font-semibold text-[#6E6962] hover:text-[#000000] hover:border-[#000000] mb-6 transition-all"
       >
         <ArrowLeft className="w-4 h-4" />
         <span>Back to Lobby</span>
       </button>
 
       {/* Main Room Card */}
-      <div className="rounded-3xl glass-panel-gold p-6 sm:p-8 border border-royal-gold/40 shadow-card-glow text-center">
+      <div className="rounded-3xl bg-[#FFFFFF] border border-[#DDD6CB] p-6 sm:p-8 text-center">
 
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-royal-gold/15 border border-royal-gold/30 text-royal-gold text-xs font-bold uppercase tracking-wider mb-2">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F7F4ED] border border-[#DDD6CB] text-[#000000] text-xs font-bold uppercase tracking-[0.08em] mb-2">
           <Users className="w-3.5 h-3.5" />
           <span>Private Match Lobby</span>
         </div>
 
-        <h1 className="font-royal text-2xl sm:text-3xl font-black gold-gradient-text mb-1">
+        <h1 className="text-2xl sm:text-3xl font-black text-[#000000] tracking-tight mb-1">
           Waiting for Warriors
         </h1>
-        <p className="text-xs text-slate-300 mb-6">
+        <p className="text-xs text-[#6E6962] mb-6">
           Share this 6-character room code with your friends to join your private match.
         </p>
 
         {/* Room Code Display Box */}
-        <div className="max-w-xs mx-auto p-4 rounded-2xl bg-slate-950/80 border-2 border-dashed border-royal-gold/60 mb-6 shadow-inner">
-          <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">Room Code</span>
-          <div className="text-3xl font-black tracking-widest text-royal-gold font-mono select-all">
+        <div className="max-w-xs mx-auto p-4 rounded-2xl bg-[#F7F4ED] border-2 border-dashed border-[#DDD6CB] mb-6">
+          <span className="text-[10px] uppercase font-bold text-[#6E6962] block mb-1">Room Code</span>
+          <div className="text-3xl font-black tracking-widest text-[#000000] font-mono select-all">
             {roomCode}
           </div>
         </div>
@@ -132,15 +132,15 @@ export const LobbyPage: React.FC<LobbyPageProps> = ({ roomCode, onStartGame, onB
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-8">
           <button
             onClick={handleCopyCode}
-            className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 flex items-center justify-center gap-2 border border-slate-700 transition-colors"
+            className="w-full sm:w-auto px-5 py-2.5 rounded-full bg-[#F7F4ED] hover:border-[#000000] text-xs font-bold text-[#000000] flex items-center justify-center gap-2 border border-[#DDD6CB] transition-all uppercase tracking-[0.08em]"
           >
-            {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+            {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
             <span>{copied ? 'Code Copied!' : 'Copy Room Code'}</span>
           </button>
 
           <button
             onClick={handleShareWhatsApp}
-            className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-bold flex items-center justify-center gap-2 transition-colors shadow-sm"
+            className="w-full sm:w-auto px-5 py-2.5 rounded-full bg-[#000000] hover:opacity-85 text-[#F7F4ED] text-xs font-bold flex items-center justify-center gap-2 transition-all uppercase tracking-[0.08em]"
           >
             <Share2 className="w-4 h-4" />
             <span>Invite on WhatsApp</span>
@@ -154,31 +154,32 @@ export const LobbyPage: React.FC<LobbyPageProps> = ({ roomCode, onStartGame, onB
             return (
               <div
                 key={idx}
-                className={`p-4 rounded-2xl border text-center transition-all ${player
-                    ? 'bg-slate-900/90 border-royal-border shadow-md'
-                    : 'bg-slate-950/40 border-dashed border-slate-800 text-slate-500'
-                  }`}
+                className={`p-4 rounded-2xl border text-center transition-all ${
+                  player
+                    ? 'bg-[#F7F4ED] border-[#DDD6CB]'
+                    : 'bg-[#FFFFFF] border-dashed border-[#DDD6CB] text-[#6E6962]'
+                }`}
               >
                 {player ? (
                   <>
-                    <div className="w-12 h-12 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-2xl mx-auto mb-2 shadow">
+                    <div className="w-12 h-12 rounded-xl bg-[#FFFFFF] border border-[#DDD6CB] flex items-center justify-center text-2xl mx-auto mb-2">
                       {player.avatar || '👑'}
                     </div>
-                    <div className="text-xs font-bold text-white truncate">{player.username?.replace(/_/g, ' ') || 'Player'}</div>
-                    <div className="text-[10px] text-amber-400 font-mono mt-0.5">{player.playerTag}</div>
-                    <span className="inline-block mt-2 text-[10px] font-bold text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded-full">
+                    <div className="text-xs font-bold text-[#000000] truncate">{player.username?.replace(/_/g, ' ') || 'Player'}</div>
+                    <div className="text-[10px] text-[#6E6962] font-mono mt-0.5">{player.playerTag}</div>
+                    <span className="inline-block mt-2 text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-300 px-2 py-0.5 rounded-full">
                       ✓ Ready
                     </span>
                   </>
                 ) : (
                   <div className="py-4">
-                    <div className="w-10 h-10 rounded-xl border border-dashed border-slate-700 flex items-center justify-center text-slate-600 mx-auto mb-2 text-sm font-bold">
+                    <div className="w-10 h-10 rounded-xl border border-dashed border-[#DDD6CB] flex items-center justify-center text-[#6E6962] mx-auto mb-2 text-sm font-bold">
                       {idx + 1}
                     </div>
-                    <span className="text-[11px] font-medium text-slate-500 block mb-2">Empty Slot</span>
+                    <span className="text-[11px] font-medium text-[#6E6962] block mb-2">Empty Slot</span>
                     <button
                       onClick={handleAddBot}
-                      className="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-[10px] font-semibold text-slate-300 flex items-center justify-center gap-1 mx-auto"
+                      className="px-2.5 py-1 rounded-full bg-[#F7F4ED] hover:border-[#000000] border border-[#DDD6CB] text-[10px] font-semibold text-[#000000] flex items-center justify-center gap-1 mx-auto transition-all"
                     >
                       <Bot className="w-3 h-3" /> +Add Bot
                     </button>
@@ -189,11 +190,11 @@ export const LobbyPage: React.FC<LobbyPageProps> = ({ roomCode, onStartGame, onB
           })}
         </div>
 
-        {/* Start Game Button (Host only) */}
+        {/* Start Game Button */}
         <button
           onClick={handleStartGame}
           disabled={players.length < 2}
-          className="w-full sm:w-auto px-10 py-3.5 rounded-2xl bg-gradient-to-r from-royal-gold via-amber-500 to-amber-600 text-royal-dark font-royal font-black text-sm uppercase tracking-wider shadow-gold-glow hover:scale-105 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full sm:w-auto px-10 py-3.5 rounded-full bg-[#000000] text-[#F7F4ED] font-bold text-sm uppercase tracking-[0.08em] hover:opacity-85 active:scale-95 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
         >
           {players.length < 2 ? 'Need at least 2 players to start' : 'Launch Royal Battle'}
         </button>
@@ -202,4 +203,3 @@ export const LobbyPage: React.FC<LobbyPageProps> = ({ roomCode, onStartGame, onB
     </div>
   );
 };
-

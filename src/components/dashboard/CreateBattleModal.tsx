@@ -70,8 +70,8 @@ export const CreateBattleModal: React.FC<CreateBattleModalProps> = ({ isOpen, on
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="relative w-full max-w-md rounded-3xl glass-panel-gold p-6 text-white shadow-2xl border border-royal-gold/40">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="relative w-full max-w-md rounded-3xl bg-[#FFFFFF] border border-[#DDD6CB] p-6 text-[#000000] shadow-xl">
         
         {/* Close Button */}
         <button
@@ -79,28 +79,28 @@ export const CreateBattleModal: React.FC<CreateBattleModalProps> = ({ isOpen, on
             playClick();
             onClose();
           }}
-          className="absolute top-4 right-4 p-2 rounded-full bg-slate-800/80 text-slate-300 hover:text-white transition-colors"
+          className="absolute top-4 right-4 p-2 rounded-full bg-[#F7F4ED] border border-[#DDD6CB] text-[#6E6962] hover:text-[#000000] hover:border-[#000000] transition-colors"
         >
-          <X className="w-5 h-5" />
+          <X className="w-4 h-4" />
         </button>
 
         {/* Modal Title */}
         <div className="text-center mb-5">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-400 text-xs font-bold uppercase tracking-wider mb-2">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F7F4ED] border border-[#DDD6CB] text-[#000000] text-xs font-bold uppercase tracking-[0.08em] mb-2">
             <Swords className="w-3.5 h-3.5" />
             <span>Open Arena Challenge</span>
           </div>
-          <h2 className="font-royal text-2xl font-black gold-gradient-text">
+          <h2 className="text-2xl font-black text-[#000000] tracking-tight">
             Set a Ludo Battle
           </h2>
-          <p className="text-xs text-slate-300 mt-1">
+          <p className="text-xs text-[#6E6962] mt-1">
             Create an open challenge for any player online to accept.
           </p>
         </div>
 
         {/* Mode Selector */}
         <div className="mb-4">
-          <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+          <label className="block text-xs font-bold text-[#6E6962] uppercase tracking-[0.08em] mb-2">
             Select Game Battle Mode
           </label>
           <div className="grid grid-cols-2 gap-2">
@@ -111,16 +111,16 @@ export const CreateBattleModal: React.FC<CreateBattleModalProps> = ({ isOpen, on
               }}
               className={`p-3 rounded-2xl flex items-center gap-3 border transition-all text-left ${
                 mode === '1v1'
-                  ? 'bg-amber-950/60 border-royal-gold shadow-gold-glow text-white'
-                  : 'bg-slate-900/60 border-royal-border text-slate-400 hover:text-white'
+                  ? 'bg-[#F7F4ED] border-[#000000]'
+                  : 'bg-[#FFFFFF] border-[#DDD6CB] text-[#6E6962] hover:border-[#000000]'
               }`}
             >
-              <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-lg">
+              <div className="w-10 h-10 rounded-xl bg-[#4A87D6]/10 border border-[#4A87D6]/30 text-lg flex items-center justify-center">
                 ⚔️
               </div>
               <div>
-                <div className="text-sm font-bold text-white">1v1 Quick Duel</div>
-                <div className="text-[11px] text-amber-400/90 font-medium">Fast 2-Player</div>
+                <div className="text-sm font-bold text-[#000000]">1v1 Duel</div>
+                <div className="text-[11px] text-[#6E6962]">Fast 2-Player</div>
               </div>
             </button>
 
@@ -131,16 +131,16 @@ export const CreateBattleModal: React.FC<CreateBattleModalProps> = ({ isOpen, on
               }}
               className={`p-3 rounded-2xl flex items-center gap-3 border transition-all text-left ${
                 mode === 'classic4p'
-                  ? 'bg-purple-950/60 border-purple-400 shadow-purple-glow text-white'
-                  : 'bg-slate-900/60 border-royal-border text-slate-400 hover:text-white'
+                  ? 'bg-[#F7F4ED] border-[#000000]'
+                  : 'bg-[#FFFFFF] border-[#DDD6CB] text-[#6E6962] hover:border-[#000000]'
               }`}
             >
-              <div className="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-300 flex items-center justify-center text-lg">
+              <div className="w-10 h-10 rounded-xl bg-[#D4A7D7]/20 border border-[#D4A7D7]/40 text-lg flex items-center justify-center">
                 👑
               </div>
               <div>
-                <div className="text-sm font-bold text-white">Classic 4-Player</div>
-                <div className="text-[11px] text-purple-300/90 font-medium">Grand 4-Way</div>
+                <div className="text-sm font-bold text-[#000000]">Classic 4P</div>
+                <div className="text-[11px] text-[#6E6962]">Grand 4-Way</div>
               </div>
             </button>
           </div>
@@ -149,10 +149,10 @@ export const CreateBattleModal: React.FC<CreateBattleModalProps> = ({ isOpen, on
         {/* Stake Chips Selection */}
         <div className="mb-5">
           <div className="flex items-center justify-between mb-2">
-            <label className="text-xs font-semibold text-slate-300 uppercase tracking-wider">
+            <label className="text-xs font-bold text-[#6E6962] uppercase tracking-[0.08em]">
               Select Virtual Coin Stake
             </label>
-            <span className="text-xs text-amber-400 font-mono">
+            <span className="text-xs text-[#000000] font-mono font-bold">
               Balance: {user?.coins.toLocaleString()}
             </span>
           </div>
@@ -165,10 +165,10 @@ export const CreateBattleModal: React.FC<CreateBattleModalProps> = ({ isOpen, on
                   playClick();
                   setStake(chip);
                 }}
-                className={`py-2 px-3 rounded-xl font-mono text-sm font-bold transition-all border ${
+                className={`py-2 px-3 rounded-full font-mono text-sm font-bold transition-all border ${
                   stake === chip
-                    ? 'bg-gradient-to-r from-royal-gold to-amber-600 text-royal-dark border-amber-300 shadow-gold-glow scale-105'
-                    : 'bg-slate-900/80 border-slate-700/80 text-slate-200 hover:border-slate-500'
+                    ? 'bg-[#000000] text-[#F7F4ED] border-[#000000]'
+                    : 'bg-[#F7F4ED] border-[#DDD6CB] text-[#000000] hover:border-[#000000]'
                 }`}
               >
                 🪙 {chip}
@@ -178,21 +178,20 @@ export const CreateBattleModal: React.FC<CreateBattleModalProps> = ({ isOpen, on
         </div>
 
         {/* Summary Card */}
-        <div className="p-3.5 rounded-2xl bg-slate-950/70 border border-royal-border mb-6">
-          <div className="flex items-center justify-between text-xs text-slate-400 mb-1.5">
+        <div className="p-3.5 rounded-2xl bg-[#F7F4ED] border border-[#DDD6CB] mb-6">
+          <div className="flex items-center justify-between text-xs text-[#6E6962] mb-1.5">
             <span>Entry Stake (Escrow):</span>
-            <span className="font-mono text-slate-200">{stake} Virtual Coins</span>
+            <span className="font-mono text-[#000000] font-bold">{stake} Virtual Coins</span>
           </div>
-          <div className="flex items-center justify-between text-xs text-slate-400 mb-2">
+          <div className="flex items-center justify-between text-xs text-[#6E6962] mb-2">
             <span>Arena Platform Fee:</span>
-            <span className="font-mono text-emerald-400">Low 5%</span>
+            <span className="font-mono text-emerald-600 font-bold">Low 5%</span>
           </div>
-          <div className="pt-2 border-t border-slate-800 flex items-center justify-between">
-            <span className="text-xs font-bold text-royal-gold uppercase tracking-wider flex items-center gap-1">
-              <Flame className="w-3.5 h-3.5 text-amber-500" />
+          <div className="pt-2 border-t border-[#DDD6CB] flex items-center justify-between">
+            <span className="text-xs font-bold text-[#000000] uppercase tracking-[0.08em]">
               Winner Takes:
             </span>
-            <span className="text-lg font-black text-royal-gold font-mono">
+            <span className="text-base font-black text-[#000000] font-mono">
               🪙 {prizePool.toLocaleString()} Coins
             </span>
           </div>
@@ -202,7 +201,7 @@ export const CreateBattleModal: React.FC<CreateBattleModalProps> = ({ isOpen, on
         <button
           onClick={handleSetBattle}
           disabled={loading || (user ? user.coins < stake : true)}
-          className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-royal-gold via-amber-500 to-amber-600 text-royal-dark font-royal font-extrabold text-sm uppercase tracking-wider shadow-gold-glow hover:opacity-95 active:scale-95 transition-all disabled:opacity-50"
+          className="w-full py-3.5 rounded-full bg-[#000000] text-[#F7F4ED] font-bold text-xs uppercase tracking-[0.08em] hover:opacity-85 active:scale-95 transition-all disabled:opacity-40"
         >
           {user && user.coins < stake ? 'Insufficient Virtual Coins' : 'Set Battle Challenge'}
         </button>
@@ -210,4 +209,3 @@ export const CreateBattleModal: React.FC<CreateBattleModalProps> = ({ isOpen, on
     </div>
   );
 };
-
