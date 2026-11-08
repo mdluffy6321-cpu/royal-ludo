@@ -92,7 +92,7 @@ export const LobbyPage: React.FC<LobbyPageProps> = ({ roomCode, onStartGame, onB
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
-      
+
       {/* Back button */}
       <button
         onClick={() => {
@@ -107,7 +107,7 @@ export const LobbyPage: React.FC<LobbyPageProps> = ({ roomCode, onStartGame, onB
 
       {/* Main Room Card */}
       <div className="rounded-3xl glass-panel-gold p-6 sm:p-8 border border-royal-gold/40 shadow-card-glow text-center">
-        
+
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-royal-gold/15 border border-royal-gold/30 text-royal-gold text-xs font-bold uppercase tracking-wider mb-2">
           <Users className="w-3.5 h-3.5" />
           <span>Private Match Lobby</span>
@@ -154,11 +154,10 @@ export const LobbyPage: React.FC<LobbyPageProps> = ({ roomCode, onStartGame, onB
             return (
               <div
                 key={idx}
-                className={`p-4 rounded-2xl border text-center transition-all ${
-                  player
+                className={`p-4 rounded-2xl border text-center transition-all ${player
                     ? 'bg-slate-900/90 border-royal-border shadow-md'
                     : 'bg-slate-950/40 border-dashed border-slate-800 text-slate-500'
-                }`}
+                  }`}
               >
                 {player ? (
                   <>

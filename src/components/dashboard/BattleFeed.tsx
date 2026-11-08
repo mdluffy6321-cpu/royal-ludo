@@ -126,17 +126,17 @@ export const BattleFeed: React.FC<BattleFeedProps> = ({
                 key={battle.id}
                 className={`relative rounded-2xl p-4 border transition-all ${
                   isMyBattle
-                    ? 'bg-amber-950/20 border-royal-gold/60 shadow-gold-glow'
-                    : 'bg-slate-900/80 border-royal-border hover:border-slate-600'
+                    ? 'bg-gradient-to-br from-[#1F1408] to-[#0A0D1A] border-royal-gold shadow-[0_0_20px_rgba(245,158,11,0.3)]'
+                    : 'bg-gradient-to-br from-[#0F172E] to-[#070B19] border-royal-gold/30 hover:border-royal-gold/60 hover:shadow-[0_4px_20px_rgba(0,0,0,0.5)]'
                 }`}
               >
                 {/* Top Badge info */}
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">
+                  <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-950/80 text-amber-300 border border-royal-gold/40">
                     {battle.mode === '1v1' ? '⚔️ 1v1 Battle' : '👑 4-Player'}
                   </span>
-                  <div className="flex items-center gap-1 text-xs font-mono font-bold text-royal-gold">
-                    <Flame className="w-3.5 h-3.5 text-amber-500" />
+                  <div className="flex items-center gap-1 text-xs font-mono font-black text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded-md border border-amber-500/30">
+                    <Flame className="w-3.5 h-3.5 text-amber-400" />
                     <span>Win: 🪙 {battle.prizePool}</span>
                   </div>
                 </div>
@@ -144,7 +144,7 @@ export const BattleFeed: React.FC<BattleFeedProps> = ({
                 {/* Creator Profile */}
                 <div className="flex items-center justify-between gap-3 mb-4">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-royal-purple to-slate-800 border border-purple-500/40 flex items-center justify-center text-lg">
+                    <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-purple-900 to-slate-900 border border-royal-gold/40 flex items-center justify-center text-xl shadow-md">
                       {battle.creatorAvatar || '👑'}
                     </div>
                     <div>
@@ -159,8 +159,8 @@ export const BattleFeed: React.FC<BattleFeedProps> = ({
 
                   {/* Stake display */}
                   <div className="text-right">
-                    <span className="text-[10px] text-slate-400 block uppercase">Stake</span>
-                    <span className="text-base font-extrabold text-white font-mono">
+                    <span className="text-[9px] text-slate-400 block uppercase font-bold tracking-wider">Stake</span>
+                    <span className="text-base font-black text-white font-mono">
                       🪙 {battle.entryFee}
                     </span>
                   </div>

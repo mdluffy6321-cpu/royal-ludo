@@ -40,12 +40,18 @@ export const LudoBoard: React.FC<LudoBoardProps> = ({
   );
 
   return (
-    <div className="relative w-full max-w-[540px] aspect-square mx-auto p-1.5 sm:p-2 rounded-3xl bg-gradient-to-br from-slate-900 via-royal-card to-slate-950 border-2 border-royal-border/90 shadow-2xl select-none">
+    <div className="relative w-full max-w-[550px] aspect-square mx-auto p-2 sm:p-3 rounded-[32px] bg-gradient-to-br from-[#121B35] via-[#070B19] to-[#040710] border-2 border-royal-gold/50 shadow-[0_0_50px_rgba(245,158,11,0.25)] select-none">
       
+      {/* Ornate corner brass accents */}
+      <div className="absolute top-1.5 left-1.5 w-4 h-4 border-t-2 border-l-2 border-royal-gold rounded-tl-xl pointer-events-none" />
+      <div className="absolute top-1.5 right-1.5 w-4 h-4 border-t-2 border-r-2 border-royal-gold rounded-tr-xl pointer-events-none" />
+      <div className="absolute bottom-1.5 left-1.5 w-4 h-4 border-b-2 border-l-2 border-royal-gold rounded-bl-xl pointer-events-none" />
+      <div className="absolute bottom-1.5 right-1.5 w-4 h-4 border-b-2 border-r-2 border-royal-gold rounded-br-xl pointer-events-none" />
+
       {/* SVG 15x15 Ludo Board */}
       <svg
         viewBox="0 0 15 15"
-        className="w-full h-full rounded-2xl overflow-hidden drop-shadow-md"
+        className="w-full h-full rounded-2xl overflow-hidden drop-shadow-2xl border border-royal-gold/30"
         style={{ shapeRendering: 'geometricPrecision' }}
       >
         <defs>

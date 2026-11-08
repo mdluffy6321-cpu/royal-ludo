@@ -7,6 +7,11 @@
     background-color: #070B19;
     color: #F8FAFC;
     font-family: 'Outfit', sans-serif;
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(124, 58, 237, 0.12) 0%, transparent 45%),
+      radial-gradient(circle at 85% 30%, rgba(245, 158, 11, 0.08) 0%, transparent 40%),
+      radial-gradient(circle at 15% 70%, rgba(59, 130, 246, 0.08) 0%, transparent 40%);
+    background-attachment: fixed;
   }
 
   h1, h2, h3, .font-royal {
@@ -32,18 +37,18 @@
 
 /* Glassmorphism Classes */
 .glass-panel {
-  background: rgba(14, 22, 46, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(35, 50, 93, 0.8);
+  background: rgba(14, 22, 46, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(35, 50, 93, 0.85);
 }
 
 .glass-panel-gold {
-  background: rgba(14, 22, 46, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(245, 158, 11, 0.35);
-  box-shadow: 0 0 20px -5px rgba(245, 158, 11, 0.2);
+  background: linear-gradient(135deg, rgba(20, 28, 58, 0.9) 0%, rgba(14, 22, 46, 0.95) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(245, 158, 11, 0.45);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45), 0 0 25px -5px rgba(245, 158, 11, 0.22);
 }
 
 /* Shimmer animation for golden badges and coins */
@@ -53,18 +58,47 @@
 }
 
 .gold-gradient-text {
-  background: linear-gradient(135deg, #FDE68A 0%, #F59E0B 50%, #D97706 100%);
+  background: linear-gradient(135deg, #FFFBEB 0%, #FDE68A 25%, #F59E0B 60%, #D97706 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 8px rgba(245, 158, 11, 0.3));
+}
+
+.purple-gradient-text {
+  background: linear-gradient(135deg, #F5F3FF 0%, #C4B5FD 35%, #8B5CF6 70%, #6D28D9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 8px rgba(139, 92, 246, 0.3));
 }
 
 .gold-badge {
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(217, 119, 6, 0.3) 100%);
-  border: 1px solid rgba(245, 158, 11, 0.5);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.25) 0%, rgba(217, 119, 6, 0.35) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.6);
+  box-shadow: 0 0 15px -3px rgba(245, 158, 11, 0.3);
 }
 
 .purple-badge {
-  background: linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(88, 28, 135, 0.3) 100%);
-  border: 1px solid rgba(139, 92, 246, 0.5);
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.25) 0%, rgba(88, 28, 135, 0.35) 100%);
+  border: 1px solid rgba(139, 92, 246, 0.6);
+  box-shadow: 0 0 15px -3px rgba(124, 58, 237, 0.3);
 }
 
+/* Metallic button active click */
+.btn-gold-primary {
+  background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 50%, #D97706 100%);
+  color: #070B19;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px 20px 0 rgba(245, 158, 11, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-gold-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px 0 rgba(245, 158, 11, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.btn-gold-primary:active {
+  transform: translateY(0) scale(0.98);
+}

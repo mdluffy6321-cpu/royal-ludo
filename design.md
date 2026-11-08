@@ -192,3 +192,4 @@ All primary cards utilize a semi-translucent glass effect with backdrop blur:
 - **DON'T** use cheap neon rainbow buttons; adhere strictly to the gold, purple, and quadrant color definitions.
 - **DON'T** create buttons or cards that lack hover, active, or disabled states.
 - **DON'T** display fake or random multiplayer results—always route moves through the authoritative game engine.
+

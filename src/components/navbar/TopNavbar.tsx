@@ -45,53 +45,56 @@ export const TopNavbar: React.FC<TopNavbarProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-royal-dark/95 backdrop-blur-md border-b border-royal-border/80 shadow-card-glow">
+    <header className="sticky top-0 z-50 bg-[#070B19]/90 backdrop-blur-xl border-b border-royal-gold/25 shadow-[0_4px_30px_rgba(0,0,0,0.7)]">
+      {/* Golden accent hairline */}
+      <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-royal-gold to-transparent opacity-75" />
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           
           {/* Brand Logo & Title */}
-          <div className="flex items-center gap-3 cursor-pointer select-none" onClick={() => handleNavClick('dashboard')}>
-            <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-royal-gold via-amber-600 to-royal-dark p-0.5 shadow-gold-glow flex items-center justify-center">
-              <div className="w-full h-full bg-royal-dark rounded-[10px] flex items-center justify-center text-xl">
+          <div className="flex items-center gap-3 cursor-pointer select-none group" onClick={() => handleNavClick('dashboard')}>
+            <div className="relative w-11 h-11 rounded-2xl bg-gradient-to-br from-[#FDE68A] via-[#F59E0B] to-[#78350F] p-[2px] shadow-[0_0_20px_rgba(245,158,11,0.4)] group-hover:scale-105 transition-all">
+              <div className="w-full h-full bg-[#070B19] rounded-[14px] flex items-center justify-center text-2xl group-hover:rotate-6 transition-transform">
                 👑
               </div>
+              <span className="absolute -top-1 -right-1 w-3 h-3 bg-royal-gold rounded-full blur-[2px] animate-pulse" />
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <span className="font-royal text-lg sm:text-xl font-extrabold tracking-wider gold-gradient-text uppercase">
+                <span className="font-royal text-lg sm:text-2xl font-black tracking-wider gold-gradient-text uppercase drop-shadow-[0_2px_10px_rgba(245,158,11,0.3)]">
                   Royal Ludo
                 </span>
-                <span className="text-[10px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded bg-royal-gold/20 text-royal-gold border border-royal-gold/30">
-                  Arena
+                <span className="text-[9px] uppercase font-black tracking-widest px-2 py-0.5 rounded-full bg-gradient-to-r from-royal-gold/25 to-amber-600/25 text-amber-300 border border-royal-gold/50 shadow-inner">
+                  Imperial
                 </span>
               </div>
-              <div className="flex items-center gap-1.5 text-[11px] text-slate-400">
-                <span className={`w-2 h-2 rounded-full ${connected ? 'bg-emerald-400 animate-pulse' : 'bg-red-400'}`}></span>
-                <span>{onlineCount} Warriors Online</span>
+              <div className="flex items-center gap-2 text-[11px] text-slate-300">
+                <span className={`w-2 h-2 rounded-full ${connected ? 'bg-emerald-400 shadow-[0_0_8px_#34D399] animate-pulse' : 'bg-red-400'}`}></span>
+                <span className="font-medium tracking-tight text-slate-300">{onlineCount} Warriors in Arena</span>
               </div>
             </div>
           </div>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-1 lg:gap-2">
+          <nav className="hidden md:flex items-center gap-1 lg:gap-1.5">
             {[
-              { id: 'dashboard', label: 'Lobby', icon: '🏰' },
-              { id: 'battles', label: 'Battle Arena', icon: '⚔️' },
+              { id: 'dashboard', label: 'Arena Lobby', icon: '🏰' },
+              { id: 'battles', label: 'Live Battles', icon: '⚔️' },
               { id: 'tournaments', label: 'Tournaments', icon: '🏆' },
-              { id: 'leaderboard', label: 'Leaderboard', icon: '🥇' },
-              { id: 'wallet', label: 'Passbook', icon: '💰' },
+              { id: 'leaderboard', label: 'Hall of Fame', icon: '🥇' },
+              { id: 'wallet', label: 'Treasury', icon: '💰' },
               { id: 'referrals', label: 'Invite & Earn', icon: '🎁' },
             ].map((item) => (
               <button
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
                   currentTab === item.id
-                    ? 'bg-royal-gold/15 text-royal-gold border border-royal-gold/40 shadow-sm'
-                    : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
+                    ? 'bg-gradient-to-r from-royal-gold/20 via-amber-500/15 to-transparent text-royal-gold border border-royal-gold/50 shadow-[0_0_15px_rgba(245,158,11,0.25)]'
+                    : 'text-slate-300 hover:text-white hover:bg-slate-800/50 border border-transparent'
                 }`}
               >
-                <span>{item.icon}</span>
+                <span className="text-sm">{item.icon}</span>
                 <span>{item.label}</span>
               </button>
             ))}
@@ -99,13 +102,13 @@ export const TopNavbar: React.FC<TopNavbarProps> = ({
             {user?.role === 'admin' && (
               <button
                 onClick={() => handleNavClick('admin')}
-                className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all ${
+                className={`flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all ${
                   currentTab === 'admin'
                     ? 'bg-purple-600 text-white shadow-purple-glow'
-                    : 'bg-royal-purple/60 text-purple-300 border border-purple-500/30 hover:bg-royal-purple'
+                    : 'bg-royal-purple/50 text-purple-200 border border-purple-500/40 hover:bg-royal-purple'
                 }`}
               >
-                <ShieldAlert className="w-3.5 h-3.5 text-purple-400" />
+                <ShieldAlert className="w-3.5 h-3.5 text-purple-300" />
                 <span>Admin</span>
               </button>
             )}
@@ -114,23 +117,23 @@ export const TopNavbar: React.FC<TopNavbarProps> = ({
           {/* Right Action Bar: Coins, Sound, Profile */}
           <div className="flex items-center gap-2 sm:gap-3">
             
-            {/* Coins Balance Chip */}
+            {/* Sovereign Coins Balance Chip */}
             <div 
               onClick={openSpinModal}
               title="Click to claim Daily Free Spin Bonus"
-              className="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-950/60 to-royal-card border border-amber-500/40 cursor-pointer hover:border-amber-400 transition-all shadow-inner group"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-gradient-to-r from-amber-950/80 via-[#141C36] to-slate-900 border border-royal-gold/50 cursor-pointer hover:border-royal-gold transition-all shadow-[0_0_15px_rgba(245,158,11,0.2)] group"
             >
-              <div className="w-6 h-6 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-400 group-hover:rotate-12 transition-transform">
-                <Coins className="w-4 h-4 text-royal-gold" />
+              <div className="w-7 h-7 rounded-xl bg-gradient-to-br from-royal-gold to-amber-600 flex items-center justify-center text-slate-950 shadow-sm group-hover:rotate-12 transition-transform font-bold">
+                <Coins className="w-4 h-4 text-slate-950" />
               </div>
               <div className="flex flex-col text-left">
-                <span className="text-[10px] text-amber-300/80 uppercase font-semibold leading-none">Coins</span>
-                <span className="text-sm font-bold text-royal-gold font-mono leading-tight">
+                <span className="text-[9px] text-amber-300/80 uppercase font-black tracking-widest leading-none">Coins</span>
+                <span className="text-sm font-black text-amber-300 font-mono leading-tight tracking-wide">
                   {user ? (user.coins).toLocaleString() : '0'}
                 </span>
               </div>
-              <span className="hidden sm:inline-block text-[10px] bg-royal-gold text-royal-dark font-extrabold px-1.5 py-0.5 rounded shadow">
-                +FREE
+              <span className="hidden sm:inline-block text-[9px] font-black bg-gradient-to-r from-royal-gold to-amber-500 text-slate-950 px-2 py-0.5 rounded-full shadow-gold-glow animate-pulse">
+                SPIN
               </span>
             </div>
 
