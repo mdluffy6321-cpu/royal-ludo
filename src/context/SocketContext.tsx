@@ -17,8 +17,8 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const { user } = useAuth();
 
   useEffect(() => {
-    // Connect to server (either localhost:3001 or window origin)
-    const socketUrl = window.location.hostname === 'localhost' ? 'http://localhost:3001' : window.location.origin;
+    // Connect to server (environment variable, localhost:3001, or window origin)
+    const socketUrl = ((import.meta as any).env?.VITE_SERVER_URL as string) || (window.location.hostname === 'localhost' ? 'http://localhost:3001' : window.location.origin);
 
     const newSocket = io(socketUrl, {
       transports: ['websocket', 'polling'],
