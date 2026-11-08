@@ -1,195 +1,161 @@
----
-name: "Imperial Obsidian & Royal Gold"
-version: "1.0.0"
-category: "Luxury Dark Gaming & High-Stakes Arena"
-description: "Official visual identity, design tokens, and aesthetic rules for ROYAL LUDO — a premium online multiplayer gaming platform."
+<!-- MIT licensed. Copyright and license: https://opendesignmd.com/licenses/ -->
 
-colors:
-  # Base Canvases
-  canvas-default: "#070B19"          # Deep obsidian navy (primary page background)
-  canvas-darker: "#040710"           # True obsidian black (deep container bases)
-  canvas-accent: "#180D2B"           # Imperial royal purple base glow
+# How cosmos.so is designed
 
-  # Surfaces & Cards (Glassmorphism)
-  surface-card: "#0E162E"            # Primary card fill with 80% opacity blur
-  surface-hover: "#142042"           # Hovered interactive card fill
-  surface-elevated: "#18264F"        # Modal dialogs & elevated popovers
-  surface-input: "#0A1021"           # Recessed input field background
+## Overview
 
-  # Structural & Metallic Borders
-  border-subtle: "#23325D"           # Standard card and divider border (opacity 0.6)
-  border-muted: "#1B284A"            # Inactive border
-  border-gold: "rgba(245, 158, 11, 0.4)" # Sovereign gold accent border
-  border-gold-bright: "#F59E0B"      # Active gold highlight border
+Cosmos.so feels like a calm discovery system built from a paper-white canvas, a black typographic spine, and a loose field of rounded image tiles. The page is not dense or dashboard-like. It opens with a centered call to action surrounded by floating thumbnails, then moves into editorial chapters where a single headline, one image, and a short explanatory block do most of the work. Further down, a three-card comparison row turns the interface into a clearer product explanation, and the dark app shell at the end shifts the mood without changing the restraint.
 
-  # Sovereign Royal Gold Accents
-  gold-primary: "#F59E0B"            # Amber Gold (crowns, coins, primary CTAs)
-  gold-hover: "#D97706"              # Darker gold for pressed/hover button states
-  gold-light: "#FDE68A"              # Champagne gold highlights & shimmer text
-  gold-dim: "rgba(245, 158, 11, 0.15)" # Subtle gold pill and chip backgrounds
+The strongest pattern is contrast through spacing, not decoration. Large empty margins let the typography breathe, the rounded pills keep interactions soft, and the image collage brings color only where the page wants attention to drift. The whole system reads as curated, minimal, and image-led.
 
-  # Imperial Purple Accents
-  purple-royal: "#7C3AED"            # Vibrant royal purple for special tournament states
-  purple-dark: "#1E0F38"             # Velvet purple background gradient blend
-  purple-dim: "rgba(124, 58, 237, 0.18)"
+## Colors
 
-  # Official Ludo Quadrant Colors (High-Vibrancy)
-  ludo-red: "#EF4444"                # Ruby Red (Quadrant 1)
-  ludo-red-dark: "#991B1B"
-  ludo-red-glow: "rgba(239, 68, 68, 0.4)"
-  ludo-green: "#10B981"              # Emerald Green (Quadrant 2)
-  ludo-green-dark: "#065F46"
-  ludo-green-glow: "rgba(16, 185, 129, 0.4)"
-  ludo-yellow: "#F59E0B"             # Amber Gold (Quadrant 3)
-  ludo-yellow-dark: "#B45309"
-  ludo-yellow-glow: "rgba(245, 158, 11, 0.4)"
-  ludo-blue: "#3B82F6"               # Sapphire Blue (Quadrant 4)
-  ludo-blue-dark: "#1D4ED8"
-  ludo-blue-glow: "rgba(59, 130, 246, 0.4)"
+Cosmos keeps the interface almost monochrome. Warm paper tones and white surfaces carry the reading experience, black ink supplies the main contrast, and a muted gray handles quieter text. Color appears most clearly in the floating thumbnail collage and in the comparison cards, where the page allows cool blues, lilacs, roses, and olive notes to surface. Those tones should stay secondary so the interface still feels like a clean discovery product rather than a colorful control panel.
 
-  # Text & Content
-  text-primary: "#F8FAFC"            # Pure crisp headline and title text
-  text-secondary: "#CBD5E1"          # Slate body text (high readability)
-  text-muted: "#94A3B8"              # Metadata, timestamps, captions
-  text-gold: "#FDE68A"               # Gold shimmer text highlights
+### Core UI colors
 
-typography:
-  display:
-    fontFamily: "'Cinzel', 'Trajan Pro', Georgia, serif"
-    letterSpacing: "0.04em"
-    weights: [700, 800, 900]
-  body:
-    fontFamily: "'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif"
-    letterSpacing: "-0.01em"
-    weights: [400, 500, 600, 700]
-  mono:
-    fontFamily: "'JetBrains Mono', 'SF Mono', Consolas, monospace"
-    letterSpacing: "0.02em"
-    weights: [500, 700]
+| token | value | use |
+|---|---|---|
+| `action` | `#000000` | Solid primary pills, the COSMOS wordmark, and strong emphasis |
+| `ink` | `#000000` | Main headlines and body text on light surfaces |
+| `mutedInk` | `#6E6962` | Supporting copy, captions, and quieter link text |
+| `canvas` | `#F7F4ED` | Page background and the open space around major sections |
+| `surface` | `#FFFFFF` | White cards, ghost buttons, and small top-bar chips |
+| `surfaceDark` | `#000000` | The dark app stage and high-contrast end sections |
+| `border` | `#DDD6CB` | Hairline outlines and card edges |
+| `onDark` | `#F7F4ED` | Text and icons on the dark stage |
 
-shapes:
-  radius-sm: "8px"                   # Chips, small badge pills
-  radius-md: "12px"                  # Inputs, sub-actions, dropdown items
-  radius-lg: "16px"                  # Primary buttons, small cards
-  radius-xl: "24px"                  # Main gaming cards, modal dialogs
-  radius-2xl: "32px"                 # Hero containers, Ludo board outer shell
-  radius-pill: "9999px"              # Round chips, player status indicators
+### Image-led tones
 
-shadows:
-  gold-glow: "0 0 25px -5px rgba(245, 158, 11, 0.45)"
-  purple-glow: "0 0 25px -5px rgba(124, 58, 237, 0.45)"
-  card-elevation: "0 8px 32px 0 rgba(0, 0, 0, 0.4)"
-  modal-elevation: "0 20px 50px -10px rgba(0, 0, 0, 0.85)"
----
+| token | value | use |
+|---|---|---|
+| `imageBlue` | `#4A87D6` | Blue-toned thumbnail fragments and cool image accents |
+| `imageLilac` | `#D4A7D7` | Lilac thumbnail fragments and soft collage accents |
+| `imageRose` | `#E3C0BD` | Rose thumbnail fragments and warm collage accents |
+| `imageOlive` | `#B7B39B` | Olive thumbnail fragments and muted collage accents |
 
-# ROYAL LUDO — Design System Specification
+The light system should stay mostly paper white and black. The darker chapter should switch to `surfaceDark` with `onDark` text, while the colored thumbnail tones should never take over buttons, borders, or background shells. Keep the contrast simple in chrome and let the imagery carry the variety.
 
-## 1. Overview & Brand Philosophy
-**Royal Ludo** is designed to look like a sovereign royal gaming club—not a toy. The interface blends the prestige of classical royalty (serif typography, gold seals, regal heraldry) with the precision of a modern competitive esports arena.
+## Typography
 
-The visual mood evokes an exclusive high-stakes salon in Monaco or Macau: deep midnight blue walls, velvet purple undertones, warm gold lighting, and razor-sharp digital telemetry.
+Cosmos uses two families with different jobs. Favorit carries the interface and editorial reading rhythm, while Cosmos Oracle can support the oversized brand wordmark and any moment that needs a more sculpted, logo-like presence. The scale is bold but not noisy: large headings, short supporting copy, and tiny quiet labels. Spacing in the type system comes from size jumps and tight tracking more than from heavy weight changes.
 
----
+Verify licensing for these families before production use.
 
-## 2. Color Usage Rules & Discipline
+| token | family | size | weight | leading | tracking | use |
+|---|---|---:|---:|---:|---:|---|
+| `brandWordmark` | Cosmos Oracle | 7.5rem | 400 | 0.88 | -0.05em | Huge COSMOS logotype at the bottom of the hero |
+| `heroDisplay` | Favorit | 4rem | 400 | 0.95 | -0.04em | Large centered statements and main page hooks |
+| `sectionDisplay` | Favorit | 3.5rem | 400 | 0.95 | -0.035em | Big editorial headlines beside image cards |
+| `cardHeading` | Favorit | 1.5rem | 400 | 1.1 | -0.02em | Card titles and short section labels |
+| `body` | Favorit | 1rem | 400 | 1.5 | 0em | Explanatory paragraphs and supporting text |
+| `bodyMedium` | Favorit | 1rem | 500 | 1.45 | 0em | Buttons, chips, and short emphasized copy |
+| `label` | Favorit | 0.75rem | 500 | 1.2 | 0.08em | Tiny upper labels and chip text |
+| `legalCopy` | Favorit | 0.75rem | 400 | 1.4 | 0em | Footer text, legal lines, and minor metadata |
 
-### A. The "Gold Standard" Rule
-- **Gold (`#F59E0B`, `#FDE68A`)** is the primary royal asset. It must be treated as a **rare metal**, not a broad paint:
-  - **USE FOR:** Crowns, trophy icons, coin balances, active turn glows, winner podiums, and the single highest-priority CTA on a view (*e.g., "Set Battle"*, *"Spin the Wheel"*).
-  - **NEVER:** Fill full screen backgrounds with gold or use gold text over white backgrounds.
+The large headings should feel almost airless, with compact line height and slightly tightened tracking. Body copy should open up enough to read easily against the wide layouts. Labels should stay small, quiet, and precise. Avoid adding a second decorative family for emphasis; the system already gets its character from scale, contrast, and the brand wordmark.
 
-### B. Glassmorphism Hierarchy
-All primary cards utilize a semi-translucent glass effect with backdrop blur:
-```css
-.glass-panel {
-  background: rgba(14, 22, 46, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(35, 50, 93, 0.8);
-}
+## Layout
 
-.glass-panel-gold {
-  background: rgba(14, 22, 46, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(245, 158, 11, 0.35);
-  box-shadow: 0 0 20px -5px rgba(245, 158, 11, 0.2);
-}
-```
+The layout is built from wide, centered chapters with generous negative space between them. The hero is the most open section: a small line of copy sits above the main action, the primary pill anchors the center, and small floating tiles drift around the composition while the huge wordmark sits low and wide. That structure makes the page feel airy even before the user reaches the product explanation.
 
----
+Below the hero, the design turns more editorial. One section pairs a big headline on the left with a tall, rounded image card in the middle and a short supporting paragraph on the right. The image card is the anchor, so the text stays brief and aligned to its edges. Another section uses a three-column comparison row under a centered headline. The cards are evenly spaced and similarly sized, which gives the page a calm explanatory rhythm after the looser hero.
 
-## 3. Typography Hierarchy
+The dark chapter changes the tone without changing the structure. It uses a near-black shell, small top-right controls, and large empty fields that leave the interface breathing room. The layout depends on repetition of rounded rectangles, consistent gutters, and strong horizontal alignment. Use `spacing.hero` for the largest open vertical moments, `spacing.wide` for chapter separation, and `spacing.gutter` to keep the cards from feeling crowded. Smaller controls can sit on `spacing.compact` and `spacing.control` so the interaction layer stays light.
 
-| Style Role | Font Family | Weight | Tracking | Usage |
-| :--- | :--- | :--- | :--- | :--- |
-| **Hero Title** | `Cinzel` | 900 Black | `0.04em` | "ROYAL LUDO", Grand Championship banners |
-| **Section Header** | `Cinzel` | 700 Bold | `0.02em` | "Battle Arena", "Game Modes", "Leaderboard" |
-| **Card Title** | `Cinzel` | 700 Bold | Normal | Mode titles, tournament match labels |
-| **Body / Prose** | `Outfit` | 400 Regular | `-0.01em` | Descriptions, rules, helper tooltips |
-| **Interface Buttons** | `Cinzel` / `Outfit` | 700 Bold | `0.05em` | All-caps uppercase action buttons |
-| **Data & Financial** | `JetBrains Mono` | 700 Bold | Normal | Coin counts (`🪙 5,000`), Player tags (`#RL-10001`), Room codes |
+## Visual language
 
----
+Cosmos is quiet, curated, and slightly playful. The floating thumbnail tiles give the page motion without using animation language in the layout itself. Their rounded corners, soft edges, and varied image content make the page feel like a collection wall. The monochrome chrome keeps that collage from becoming busy. Black pills, white chips, and dark shells create a very stable frame around the imagery.
 
-## 4. Components & Interactive Elements
+The system also likes contrast between softness and structure. Pills are fully rounded and friendly, but the headline typography is severe and direct. The image cards are tall and rounded, while the text around them stays open and linear. That balance makes the page feel premium without becoming formal. Flat fills work better than heavy shadows here; the visual interest comes from spacing, image tone, and the shift between paper-white and near-black surfaces. Keep borders light and sparse so the layout keeps its gallery-like calm.
 
-### Buttons
-1. **Primary Sovereign CTA:**
-   - Background: `linear-gradient(to right, #F59E0B, #D97706)`
-   - Text: `#070B19` (Jet black for maximum legibility and contrast)
-   - Font: `Cinzel`, Bold, Uppercase, Tracking-wider
-   - Shadow: `shadow-gold-glow`
-   - Active: `scale-95` tap feedback
+## Components
 
-2. **Secondary Slate Action:**
-   - Background: `rgba(30, 41, 59, 0.8)` with `border: 1px solid #334155`
-   - Text: `#F8FAFC`
-   - Hover: `background: rgba(51, 65, 85, 0.9)`
+### Hero stage
 
-3. **Danger / Resign Button:**
-   - Background: `#DC2626` with red glow, white text.
+- **Anatomy:** A small line of supporting copy, one primary pill, one secondary pill, scattered floating tiles, and the oversized COSMOS wordmark.
+- **Surface:** `canvas` for the open field; `action` for the primary pill; `surface` for the secondary pill.
+- **Typography:** `bodyMedium` for the pills and `brandWordmark` for the bottom wordmark.
+- **Shape:** Use `pill` for the two actions and `tile` for the drifting thumbnails.
+- **Composition:** Keep the action centered and the wordmark low and wide. The tiles should feel dispersed, not grouped into a grid.
+- **Visible states:** The primary action is solid black with light text. The secondary action is white with a light border and dark text.
 
-### Badges & Status Chips
-- **Live Match Pulse:** Crimson pill with animated pulsing dot (`● LIVE`).
-- **Escrow Chip:** Amber pill displaying coin stake (`🪙 100`).
-- **Verified Winner:** Emerald green badge with checkmark (`✓ Champion`).
+### Editorial story card
 
----
+- **Anatomy:** A tall image card, a large headline block, and a short supporting paragraph.
+- **Surface:** White card face on the paper canvas, with the image filling most of the vertical space.
+- **Typography:** `sectionDisplay` for the headline and `body` for the supporting text.
+- **Shape:** `panel` corners make the card feel substantial without becoming heavy.
+- **Spacing:** Keep a wide gutter between headline, image, and supporting text so each part can read on its own.
+- **Composition:** Let the image carry the middle of the section. The text should remain brief and aligned to the visual edges of the card.
 
-## 5. Game Interface Specifications
+### Comparison row
 
-### The 15×15 Ludo Board
-- **Outer Shell:** Deep navy container with 32px rounded corners and a 2px royal border.
-- **Yard Bases:** Rich quadrant gradients with glossy inner pads and metallic rings.
-- **Perimeter Path:** 52 dark track cells with 1px borders.
-- **8 Safe Stars:** Rendered as crisp 5-pointed golden SVG stars on starting and checkpoint coordinates.
-- **Center Home:** 4 meeting triangles with the golden royal crown seal in the dead center.
-- **Token Pieces:** 3D-styled SVG circles with radial specular highlights, drop shadows, and active turn pulsing rings.
+- **Anatomy:** Three equal cards with different internal fields and a short label beneath each one.
+- **Surface:** Neutral white or canvas-backed cards with image-led color inside the card area.
+- **Typography:** `cardHeading` for the card copy and `label` for the small captions below.
+- **Shape:** The same panel radius across all three cards keeps the row balanced.
+- **Spacing:** Use consistent horizontal gaps and equal vertical alignment so the row reads like one system, not three separate features.
+- **Composition:** The cards should be visually distinct through tone, not through size. Blue, slate, and deep indigo fields work well because they preserve the page’s quiet feel.
 
-### The 3D Dice Roller
-- 20×20 to 24×24 tactile die matching the current player's color.
-- CSS 3D tumble animation during roll phase with procedural sound synthesis.
-- Pulsing gold ring surrounding the die when it is the local player's turn to roll.
+### Dark app shell
 
-### Circular Turn Timer (15 Seconds)
-- **15s to 9s:** Emerald green ring (Safe).
-- **8s to 4s:** Amber yellow ring (Warning).
-- **3s to 0s:** Ruby red pulsing ring with audible countdown clicks (Critical).
+- **Anatomy:** A top-right chip row, a mostly empty black workspace, and a floating round control near the lower edge.
+- **Surface:** `surfaceDark` with `onDark` text and light controls.
+- **Typography:** `bodyMedium` for the top chips and `body` or `label` for tiny utility text.
+- **Shape:** Rounded chips and a soft circular control keep the dark stage from feeling rigid.
+- **Spacing:** Leave large amounts of empty black space. The emptiness is part of the composition.
+- **Composition:** Keep the controls close to the top edge and the workspace otherwise sparse. The page should feel focused, not filled.
 
----
+### Top bar chip
 
-## 6. Do's and Don'ts for AI Agents & Developers
+- **Anatomy:** Compact rounded buttons, small utility icons, and a colored avatar dot.
+- **Surface:** White chips against the surrounding dark or light field.
+- **Typography:** `bodyMedium` so the labels stay legible at small size.
+- **Shape:** `pill` radii with small horizontal padding.
+- **Visible states:** Solid chips are used for the strongest action; lighter chips and simple icons stay visually quieter.
+- **Composition:** Group the controls tightly so they feel like a single toolbar rather than scattered buttons.
 
-### Do's:
-- **DO** use the designated font pairing (`Cinzel` for headings + `Outfit` for body text + `JetBrains Mono` for stats).
-- **DO** maintain responsive touch-friendly padding (minimum 44×44px touch targets on mobile).
-- **DO** verify that all coin transactions display the non-monetary currency symbol (`🪙`) alongside numeric values.
-- **DO** keep the dark mode palette intact across all screens.
+## Responsive behavior
 
-### Don'ts:
-- **DON'T** introduce generic bright white cards or light-mode themes that break the immersive luxury salon aesthetic.
-- **DON'T** use cheap neon rainbow buttons; adhere strictly to the gold, purple, and quadrant color definitions.
-- **DON'T** create buttons or cards that lack hover, active, or disabled states.
-- **DON'T** display fake or random multiplayer results—always route moves through the authoritative game engine.
+On smaller screens, keep the order of information intact: hero message first, action next, image or tile collage after that, then supporting details. The oversized wordmark should shrink without losing its wide, low placement. The three-card comparison row should stack cleanly, with consistent gaps and captions that remain attached to their cards. The dark shell should keep its sparse feel, with controls compressed into one compact top row and enough empty space below to preserve the mood. Favor vertical flow over nested side-by-side layouts once the width gets tight.
 
+## Practical implementation guidance
+
+### Preserve
+
+- Keep the page mostly paper white and black in chrome.
+- Let the floating thumbnail collage provide color, not the controls.
+- Use large type with tight tracking and short blocks of copy.
+- Keep rounded pills and rounded cards consistent across the system.
+- Preserve the large gaps between sections so the page feels editorial.
+
+### Avoid
+
+- Avoid bright brand colors in navigation, buttons, or borders.
+- Avoid dense card shadows or heavy framing.
+- Avoid mixing too many radii in one section.
+- Avoid long paragraphs beside the biggest headlines.
+- Avoid making the thumbnail colors into global chrome colors.
+
+### Recommended build order
+
+1. Build the canvas, ink, and spacing foundation.
+2. Add the primary and secondary pill actions.
+3. Recreate the hero composition with floating tiles and the wordmark.
+4. Build the editorial image card and supporting text layout.
+5. Add the comparison row with three equal cards.
+6. Finish with the dark app shell and compact top controls.
+7. Check the mobile stack so the reading order stays intact.
+
+### Accessibility
+
+- Keep text over imagery backed by strong contrast.
+- Make every pill and chip large enough to tap comfortably.
+- Use distinct visual cues for the primary and secondary actions.
+- Do not rely on color alone to distinguish the comparison cards.
+- Keep text alternatives useful for the floating thumbnails and the tall image card.
+
+## Scope note
+
+This guide covers cosmos.so’s homepage hero, editorial story card, comparison row, and dark app shell. Mobile-specific layouts, motion, and interaction states are not included. Measurements are practical adaptation targets for implementation.

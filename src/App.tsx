@@ -22,7 +22,8 @@ import { GameMode, AppNotification } from './types';
 export const App: React.FC = () => {
   const { user } = useAuth();
 
-  const [currentTab, setCurrentTab] = useState<string>('dashboard');
+  // Show cosmos landing by default; switch to dashboard once user enters app
+  const [currentTab, setCurrentTab] = useState<string>('landing');
   const [activeGame, setActiveGame] = useState<{ roomId: string; mode: GameMode } | null>(null);
   const [activeLobbyCode, setActiveLobbyCode] = useState<string | null>(null);
   const [spinModalOpen, setSpinModalOpen] = useState<boolean>(false);
@@ -95,13 +96,17 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-royal-dark text-slate-100 flex flex-col font-sans selection:bg-royal-gold selection:text-royal-dark">
+    <div className={`min-h-screen flex flex-col font-sans ${
+      currentTab === 'landing' && !activeGame && !activeLobbyCode
+        ? ''
+        : 'bg-royal-dark text-slate-100 selection:bg-royal-gold selection:text-royal-dark'
+    }`}>
       
       {/* 1. Testing Bar for Demo Multi-Account Switcher */}
-      <DemoSwitcherBanner />
+      {currentTab !== 'landing' && <DemoSwitcherBanner />}
 
       {/* 2. Top Navigation Bar (Hidden only during full-screen gameplay if preferred, or persistent) */}
-      {!activeGame && (
+      {!activeGame && currentTab !== 'landing' && (
         <TopNavbar
           currentTab={currentTab}
           setCurrentTab={(tab) => {
@@ -159,7 +164,7 @@ export const App: React.FC = () => {
       </main>
 
       {/* 4. Mobile Bottom Navigation (Visible on phones when not in match) */}
-      {!activeGame && !activeLobbyCode && (
+      {!activeGame && !activeLobbyCode && currentTab !== 'landing' && (
         <MobileBottomNav
           currentTab={currentTab}
           setCurrentTab={(tab) => {

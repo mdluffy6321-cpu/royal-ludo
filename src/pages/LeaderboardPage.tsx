@@ -80,7 +80,7 @@ export const LeaderboardPage: React.FC = () => {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-6 space-y-6">
-      
+
       {/* Header & Tabs */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
@@ -110,11 +110,10 @@ export const LeaderboardPage: React.FC = () => {
                 playClick();
                 setTimeframe(tab.id as any);
               }}
-              className={`px-3 py-1.5 rounded-lg transition-colors ${
-                timeframe === tab.id
+              className={`px-3 py-1.5 rounded-lg transition-colors ${timeframe === tab.id
                   ? 'bg-royal-gold text-royal-dark font-bold'
                   : 'text-slate-400 hover:text-white'
-              }`}
+                }`}
             >
               {tab.label}
             </button>
@@ -124,7 +123,7 @@ export const LeaderboardPage: React.FC = () => {
 
       {/* Top 3 Podium (1st, 2nd, 3rd) */}
       <div className="grid grid-cols-3 gap-2 sm:gap-4 items-end max-w-2xl mx-auto pt-6 pb-2">
-        
+
         {/* 2nd Place Silver */}
         <div className="text-center">
           <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-slate-800 border-2 border-slate-400 mx-auto flex items-center justify-center text-2xl shadow-lg relative mb-2">
@@ -200,9 +199,8 @@ export const LeaderboardPage: React.FC = () => {
               return (
                 <tr
                   key={row.userId}
-                  className={`transition-colors ${
-                    isMe ? 'bg-royal-gold/10 text-royal-gold' : 'hover:bg-slate-800/40 text-slate-200'
-                  }`}
+                  className={`transition-colors ${isMe ? 'bg-royal-gold/10 text-royal-gold' : 'hover:bg-slate-800/40 text-slate-200'
+                    }`}
                 >
                   <td className="py-3 px-2 font-mono font-bold">
                     {row.rank <= 3 ? ['🥇', '🥈', '🥉'][row.rank - 1] : `#${row.rank}`}

@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @layer base {
+  /* ── Game App shell (authenticated dashboard, game board) ── */
   body {
     background-color: #070B19;
     color: #F8FAFC;
@@ -17,7 +18,95 @@
   h1, h2, h3, .font-royal {
     font-family: 'Cinzel', serif;
   }
+
+  /* ── Landing page overrides: cosmos paper-white shell ── */
+  .landing-page h1,
+  .landing-page h2,
+  .landing-page h3 {
+    font-family: 'Outfit', sans-serif;
+  }
 }
+
+/* ── Gold & dark scrollbars for game shell ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #070B19; }
+::-webkit-scrollbar-thumb { background: #23325D; border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: #F59E0B; }
+
+/* ── Glassmorphism — game cards ── */
+.glass-panel {
+  background: rgba(14, 22, 46, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(35, 50, 93, 0.85);
+}
+
+.glass-panel-gold {
+  background: linear-gradient(135deg, rgba(20, 28, 58, 0.9) 0%, rgba(14, 22, 46, 0.95) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(245, 158, 11, 0.45);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45), 0 0 25px -5px rgba(245, 158, 11, 0.22);
+}
+
+/* ── Shimmer keyframe ── */
+@keyframes goldShimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ── Floating tile keyframe (cosmos landing) ── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(var(--rot, 0deg)); }
+  33%       { transform: translateY(-12px) rotate(calc(var(--rot, 0deg) + 1deg)); }
+  66%       { transform: translateY(-6px)  rotate(calc(var(--rot, 0deg) - 1deg)); }
+}
+
+.animate-float          { animation: float 6s ease-in-out infinite; }
+.animate-float-delayed  { animation: float 6s ease-in-out 2s infinite; }
+.animate-float-slow     { animation: float 8s ease-in-out 1s infinite; }
+
+/* ── Gold gradient text ── */
+.gold-gradient-text {
+  background: linear-gradient(135deg, #FFFBEB 0%, #FDE68A 25%, #F59E0B 60%, #D97706 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 8px rgba(245, 158, 11, 0.3));
+}
+
+.purple-gradient-text {
+  background: linear-gradient(135deg, #F5F3FF 0%, #C4B5FD 35%, #8B5CF6 70%, #6D28D9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 8px rgba(139, 92, 246, 0.3));
+}
+
+/* ── Gold / purple badge chips ── */
+.gold-badge {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.25) 0%, rgba(217, 119, 6, 0.35) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.6);
+  box-shadow: 0 0 15px -3px rgba(245, 158, 11, 0.3);
+}
+
+.purple-badge {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.25) 0%, rgba(88, 28, 135, 0.35) 100%);
+  border: 1px solid rgba(139, 92, 246, 0.6);
+  box-shadow: 0 0 15px -3px rgba(124, 58, 237, 0.3);
+}
+
+/* ── Gold primary CTA button ── */
+.btn-gold-primary {
+  background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 50%, #D97706 100%);
+  color: #070B19;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px 20px 0 rgba(245, 158, 11, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-gold-primary:hover  { transform: translateY(-2px); box-shadow: 0 6px 25px 0 rgba(245, 158, 11, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.5); }
+.btn-gold-primary:active { transform: translateY(0) scale(0.98); }
+
 
 /* Custom Gold and Dark Glowing Scrollbars */
 ::-webkit-scrollbar {
