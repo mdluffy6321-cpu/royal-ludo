@@ -36,6 +36,11 @@ export default {
           blueGlow: 'rgba(59, 130, 246, 0.4)',
         }
       },
+      fontFamily: {
+        royal: ["'Cinzel'", 'serif'],
+        sans: ["'Outfit'", 'sans-serif'],
+        mono: ["'JetBrains Mono'", 'SF Mono', 'Consolas', 'monospace'],
+      },
       boxShadow: {
         'gold-glow': '0 0 25px -5px rgba(245, 158, 11, 0.45)',
         'purple-glow': '0 0 25px -5px rgba(124, 58, 237, 0.45)',

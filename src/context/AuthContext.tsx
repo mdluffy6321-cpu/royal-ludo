@@ -19,7 +19,7 @@ export const DEMO_USERS: User[] = [
   {
     id: 'user_king_1',
     phone: '9876543210',
-    username: 'King_Maharaja',
+    username: 'King Maharaja',
     playerTag: '#RL-10001',
     avatar: '👑',
     referralCode: 'ROYAL814',
@@ -37,7 +37,7 @@ export const DEMO_USERS: User[] = [
   {
     id: 'user_queen_2',
     phone: '9876543211',
-    username: 'Queen_Maharani',
+    username: 'Queen Maharani',
     playerTag: '#RL-10002',
     avatar: '👸',
     referralCode: 'QUEEN288',
@@ -56,7 +56,7 @@ export const DEMO_USERS: User[] = [
   {
     id: 'user_knight_3',
     phone: '9876543212',
-    username: 'Knight_Vikram',
+    username: 'Knight Vikram',
     playerTag: '#RL-10003',
     avatar: '⚔️',
     referralCode: 'KNIGHT99',
@@ -75,7 +75,7 @@ export const DEMO_USERS: User[] = [
   {
     id: 'user_bishop_4',
     phone: '9876543213',
-    username: 'Master_Arjun',
+    username: 'Master Arjun',
     playerTag: '#RL-10004',
     avatar: '🏹',
     referralCode: 'ARJUN777',
@@ -118,7 +118,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     if (storedUser && storedToken) {
       try {
-        setUser(JSON.parse(storedUser));
+        const parsed = JSON.parse(storedUser);
+        if (parsed && parsed.username) {
+          parsed.username = parsed.username.replace(/_/g, ' ');
+        }
+        setUser(parsed);
         setToken(storedToken);
       } catch {
         setUser(DEMO_USERS[0]);

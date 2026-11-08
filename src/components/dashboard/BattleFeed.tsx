@@ -148,8 +148,8 @@ export const BattleFeed: React.FC<BattleFeedProps> = ({
                       {battle.creatorAvatar || '👑'}
                     </div>
                     <div>
-                      <div className="text-sm font-bold text-white truncate max-w-[120px]">
-                        {battle.creatorName}
+                      <div className="text-sm font-bold text-white truncate max-w-[130px]">
+                        {battle.creatorName.replace(/_/g, ' ')}
                       </div>
                       <div className="text-[10px] text-amber-400 font-mono">
                         {battle.creatorTag}

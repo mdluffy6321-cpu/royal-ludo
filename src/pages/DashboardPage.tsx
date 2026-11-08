@@ -46,7 +46,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
     {
       id: 'b_demo_1',
       creatorId: 'user_queen_2',
-      creatorName: 'Queen_Maharani',
+      creatorName: 'Queen Maharani',
       creatorAvatar: '👸',
       creatorTag: '#RL-10002',
       entryFee: 100,
@@ -58,7 +58,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
     {
       id: 'b_demo_2',
       creatorId: 'user_knight_3',
-      creatorName: 'Knight_Vikram',
+      creatorName: 'Knight Vikram',
       creatorAvatar: '⚔️',
       creatorTag: '#RL-10003',
       entryFee: 250,
@@ -70,7 +70,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
     {
       id: 'b_demo_3',
       creatorId: 'user_bishop_4',
-      creatorName: 'Master_Arjun',
+      creatorName: 'Master Arjun',
       creatorAvatar: '🏹',
       creatorTag: '#RL-10004',
       entryFee: 500,
@@ -119,6 +119,19 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
 
     return () => channel.close();
   }, [user, onStartGame]);
+
+  const handleStartQuick1v1 = () => {
+    playClick();
+    if (!user) return;
+    if (socket && connected) {
+      socket.emit('FIND_MATCH', { mode: '1v1', player: user });
+      socket.once('MATCH_FOUND', ({ roomId }: { roomId: string }) => {
+        onStartGame(roomId, '1v1');
+      });
+    } else {
+      onStartGame(`room_1v1_${Date.now()}`, '1v1');
+    }
+  };
 
   const handleStartPracticeAI = () => {
     playClick();
@@ -202,26 +215,17 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
     <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 space-y-6">
       
       {/* 1. Hero Welcome & Account Stats Banner (Imperial Obsidian & Royal Gold) */}
-      <div className="relative rounded-[32px] overflow-hidden bg-gradient-to-br from-[#0B1226] via-[#070B19] to-[#120B20] p-6 sm:p-8 border-2 border-royal-gold/40 shadow-[0_0_40px_rgba(245,158,11,0.2)]">
-        {/* Ornate corner gold decorations */}
-        <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-royal-gold rounded-tl-[30px] pointer-events-none" />
-        <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-royal-gold rounded-tr-[30px] pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-royal-gold rounded-bl-[30px] pointer-events-none" />
-        <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-royal-gold rounded-br-[30px] pointer-events-none" />
-
+      <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-[#0F172E]/95 via-[#070B19] to-[#140D24] p-6 sm:p-8 border border-royal-gold/50 shadow-[0_8px_32px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(245,158,11,0.25)]">
         {/* Ambient atmospheric lighting */}
         <div className="absolute -top-16 -right-16 w-80 h-80 bg-royal-gold/15 rounded-full blur-[80px] pointer-events-none" />
         <div className="absolute -bottom-16 left-1/4 w-80 h-80 bg-purple-700/20 rounded-full blur-[90px] pointer-events-none" />
 
         <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
           <div className="flex items-center gap-4 sm:gap-5">
-            <div className="relative w-18 h-18 sm:w-22 sm:h-22 rounded-3xl bg-gradient-to-br from-[#FDE68A] via-[#F59E0B] to-[#78350F] p-[2.5px] shadow-[0_0_25px_rgba(245,158,11,0.45)] flex items-center justify-center">
-              <div className="w-full h-full bg-[#070B19] rounded-[22px] flex items-center justify-center text-4xl sm:text-5xl">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-[#FDE68A] via-[#F59E0B] to-[#B45309] p-[2px] shadow-[0_0_20px_rgba(245,158,11,0.35)] flex items-center justify-center shrink-0">
+              <div className="w-full h-full bg-[#070B19] rounded-[14px] flex items-center justify-center text-3xl sm:text-4xl">
                 {user?.avatar || '👑'}
               </div>
-              <span className="absolute -top-3 -right-3 text-xl filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] animate-bounce-subtle">
-                👑
-              </span>
             </div>
 
             <div>
@@ -234,7 +238,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                 </span>
               </div>
               <h1 className="font-royal text-2xl sm:text-3xl lg:text-4xl font-black text-white mt-1.5 tracking-wide">
-                Welcome, <span className="gold-gradient-text drop-shadow-[0_2px_12px_rgba(245,158,11,0.4)]">{user?.username}</span>
+                Welcome, <span className="gold-gradient-text drop-shadow-[0_2px_12px_rgba(245,158,11,0.4)]">{user?.username ? user.username.replace(/_/g, ' ') : 'King Maharaja'}</span>
               </h1>
               <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-md leading-relaxed">
                 Step into the high-stakes royal arena. Stake virtual coins, execute strategic captures, and triumph!
@@ -289,8 +293,8 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           
           {/* Card 1: 1v1 Quick Battle */}
           <div 
-            onClick={() => setCreateModalOpen(true)}
-            className="group relative rounded-[26px] p-5 bg-gradient-to-b from-[#181528] via-[#0E152E] to-[#070B19] border-2 border-royal-gold/40 hover:border-royal-gold shadow-[0_8px_30px_rgba(0,0,0,0.6)] hover:shadow-[0_0_30px_rgba(245,158,11,0.35)] cursor-pointer hover:-translate-y-1.5 transition-all duration-300 overflow-hidden"
+            onClick={handleStartQuick1v1}
+            className="group relative rounded-2xl p-5 bg-gradient-to-b from-[#181528] via-[#0E152E] to-[#070B19] border border-royal-gold/40 hover:border-royal-gold shadow-[0_8px_30px_rgba(0,0,0,0.6)] hover:shadow-[0_0_30px_rgba(245,158,11,0.35)] cursor-pointer hover:-translate-y-1.5 transition-all duration-300 overflow-hidden"
           >
             <div className="absolute top-0 right-0 w-32 h-32 bg-royal-gold/15 rounded-full blur-2xl group-hover:scale-150 transition-transform" />
             <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500/25 to-amber-900/40 text-royal-gold flex items-center justify-center text-3xl mb-4 border border-royal-gold/40 group-hover:scale-110 group-hover:rotate-6 transition-all shadow-[0_0_15px_rgba(245,158,11,0.25)]">
@@ -306,7 +310,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               Fast-paced 2-player battle. 15s turn timer. First token home claims the grand purse!
             </p>
             <div className="flex items-center justify-between text-xs font-black uppercase tracking-wider text-royal-gold pt-3 border-t border-royal-border/80">
-              <span className="group-hover:tracking-widest transition-all">Set Challenge</span>
+              <span className="group-hover:tracking-widest transition-all">Play 1v1 Now</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
             </div>
           </div>
@@ -315,9 +319,9 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           <div 
             onClick={() => {
               playClick();
-              setCreateModalOpen(true);
+              onStartGame(`room_4p_${Date.now()}`, 'classic4p');
             }}
-            className="group relative rounded-[26px] p-5 bg-gradient-to-b from-[#221035] via-[#101736] to-[#070B19] border-2 border-purple-500/40 hover:border-purple-400 shadow-[0_8px_30px_rgba(0,0,0,0.6)] hover:shadow-[0_0_30px_rgba(124,58,237,0.35)] cursor-pointer hover:-translate-y-1.5 transition-all duration-300 overflow-hidden"
+            className="group relative rounded-2xl p-5 bg-gradient-to-b from-[#221035] via-[#101736] to-[#070B19] border border-purple-500/40 hover:border-purple-400 shadow-[0_8px_30px_rgba(0,0,0,0.6)] hover:shadow-[0_0_30px_rgba(124,58,237,0.35)] cursor-pointer hover:-translate-y-1.5 transition-all duration-300 overflow-hidden"
           >
             <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/15 rounded-full blur-2xl group-hover:scale-150 transition-transform" />
             <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500/25 to-purple-900/40 text-purple-300 flex items-center justify-center text-3xl mb-4 border border-purple-500/40 group-hover:scale-110 group-hover:rotate-6 transition-all shadow-[0_0_15px_rgba(124,58,237,0.25)]">
@@ -333,7 +337,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               Full 4-player imperial showdown. 8 safe stars, captures, and glorious home run!
             </p>
             <div className="flex items-center justify-between text-xs font-black uppercase tracking-wider text-purple-400 pt-3 border-t border-purple-900/60">
-              <span className="group-hover:tracking-widest transition-all">Enter Arena</span>
+              <span className="group-hover:tracking-widest transition-all">Play 4P Now</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
             </div>
           </div>
@@ -341,7 +345,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           {/* Card 3: Play with Friends (Private Room) */}
           <div 
             onClick={handleCreatePrivateRoom}
-            className="group relative rounded-[26px] p-5 bg-gradient-to-b from-[#0F1E3D] via-[#0D1833] to-[#070B19] border-2 border-blue-500/40 hover:border-blue-400 shadow-[0_8px_30px_rgba(0,0,0,0.6)] hover:shadow-[0_0_30px_rgba(59,130,246,0.35)] cursor-pointer hover:-translate-y-1.5 transition-all duration-300 overflow-hidden"
+            className="group relative rounded-2xl p-5 bg-gradient-to-b from-[#0F1E3D] via-[#0D1833] to-[#070B19] border border-blue-500/40 hover:border-blue-400 shadow-[0_8px_30px_rgba(0,0,0,0.6)] hover:shadow-[0_0_30px_rgba(59,130,246,0.35)] cursor-pointer hover:-translate-y-1.5 transition-all duration-300 overflow-hidden"
           >
             <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/15 rounded-full blur-2xl group-hover:scale-150 transition-transform" />
             <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500/25 to-blue-900/40 text-blue-300 flex items-center justify-center text-3xl mb-4 border border-blue-500/40 group-hover:scale-110 group-hover:rotate-6 transition-all shadow-[0_0_15px_rgba(59,130,246,0.25)]">
@@ -365,7 +369,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           {/* Card 4: Practice vs AI Bot */}
           <div 
             onClick={handleStartPracticeAI}
-            className="group relative rounded-[26px] p-5 bg-gradient-to-b from-[#09221C] via-[#0A1A28] to-[#070B19] border-2 border-emerald-500/40 hover:border-emerald-400 shadow-[0_8px_30px_rgba(0,0,0,0.6)] hover:shadow-[0_0_30px_rgba(16,185,129,0.35)] cursor-pointer hover:-translate-y-1.5 transition-all duration-300 overflow-hidden"
+            className="group relative rounded-2xl p-5 bg-gradient-to-b from-[#09221C] via-[#0A1A28] to-[#070B19] border border-emerald-500/40 hover:border-emerald-400 shadow-[0_8px_30px_rgba(0,0,0,0.6)] hover:shadow-[0_0_30px_rgba(16,185,129,0.35)] cursor-pointer hover:-translate-y-1.5 transition-all duration-300 overflow-hidden"
           >
             <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/15 rounded-full blur-2xl group-hover:scale-150 transition-transform" />
             <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500/25 to-emerald-900/40 text-emerald-300 flex items-center justify-center text-3xl mb-4 border border-emerald-500/40 group-hover:scale-110 group-hover:rotate-6 transition-all shadow-[0_0_15px_rgba(16,185,129,0.25)]">

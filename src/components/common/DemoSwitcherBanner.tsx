@@ -16,7 +16,7 @@ export const DemoSwitcherBanner: React.FC = () => {
             Testing Bar
           </span>
           <span className="hidden sm:inline text-slate-400">
-            Active: <strong className="text-white">{user?.username}</strong> ({user?.playerTag})
+            Active: <strong className="text-white">{user?.username.replace(/_/g, ' ')}</strong> ({user?.playerTag})
           </span>
         </div>
 
@@ -34,9 +34,9 @@ export const DemoSwitcherBanner: React.FC = () => {
                   ? 'bg-royal-gold text-royal-dark font-bold shadow-sm'
                   : 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700'
               }`}
-              title={`Switch active player to ${demo.username}`}
+              title={`Switch active player to ${demo.username.replace(/_/g, ' ')}`}
             >
-              {demo.avatar} {demo.username.split('_')[0]}
+              {demo.avatar} {demo.username.replace(/_/g, ' ').split(' ')[0]}
             </button>
           ))}
 

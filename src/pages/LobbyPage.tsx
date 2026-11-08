@@ -164,7 +164,7 @@ export const LobbyPage: React.FC<LobbyPageProps> = ({ roomCode, onStartGame, onB
                     <div className="w-12 h-12 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-2xl mx-auto mb-2 shadow">
                       {player.avatar || '👑'}
                     </div>
-                    <div className="text-xs font-bold text-white truncate">{player.username}</div>
+                    <div className="text-xs font-bold text-white truncate">{player.username?.replace(/_/g, ' ') || 'Player'}</div>
                     <div className="text-[10px] text-amber-400 font-mono mt-0.5">{player.playerTag}</div>
                     <span className="inline-block mt-2 text-[10px] font-bold text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded-full">
                       ✓ Ready

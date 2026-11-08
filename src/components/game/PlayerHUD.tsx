@@ -57,7 +57,7 @@ export const PlayerHUD: React.FC<PlayerHUDProps> = ({ player, isCurrentTurn, tim
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-1.5">
             <span className="text-xs sm:text-sm font-bold text-white truncate max-w-[90px] sm:max-w-[110px]">
-              {player.username}
+              {player.username.replace(/_/g, ' ')}
             </span>
             {player.isBot && (
               <span className="text-[10px] bg-slate-800 text-slate-400 px-1 rounded flex items-center gap-0.5">

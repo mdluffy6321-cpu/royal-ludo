@@ -25,7 +25,7 @@ export const GamePage: React.FC<GamePageProps> = ({ roomId, gameMode, onExitGame
     const is1v1 = gameMode === '1v1' || gameMode === 'ai';
     const p1: Player = {
       id: user?.id || 'p1',
-      username: user?.username || 'King_Maharaja',
+      username: user?.username ? user.username.replace(/_/g, ' ') : 'King Maharaja',
       playerTag: user?.playerTag || '#RL-10001',
       avatar: user?.avatar || '👑',
       color: 'red',
@@ -48,7 +48,7 @@ export const GamePage: React.FC<GamePageProps> = ({ roomId, gameMode, onExitGame
 
     const p2: Player = {
       id: 'bot_queen',
-      username: gameMode === 'ai' ? 'Knight Bot' : 'Queen_Maharani',
+      username: gameMode === 'ai' ? 'Knight Bot' : 'Queen Maharani',
       playerTag: gameMode === 'ai' ? '#BOT-1' : '#RL-10002',
       avatar: gameMode === 'ai' ? '🤖' : '👸',
       color: 'yellow',

@@ -13,7 +13,7 @@ export const LeaderboardPage: React.FC = () => {
     {
       rank: 1,
       userId: 'u1',
-      username: 'King_Maharaja',
+      username: 'King Maharaja',
       playerTag: '#RL-10001',
       avatar: '👑',
       matchesPlayed: 48,
@@ -24,7 +24,7 @@ export const LeaderboardPage: React.FC = () => {
     {
       rank: 2,
       userId: 'u2',
-      username: 'Queen_Maharani',
+      username: 'Queen Maharani',
       playerTag: '#RL-10002',
       avatar: '👸',
       matchesPlayed: 35,
@@ -35,7 +35,7 @@ export const LeaderboardPage: React.FC = () => {
     {
       rank: 3,
       userId: 'u3',
-      username: 'Knight_Vikram',
+      username: 'Knight Vikram',
       playerTag: '#RL-10003',
       avatar: '⚔️',
       matchesPlayed: 22,
@@ -46,7 +46,7 @@ export const LeaderboardPage: React.FC = () => {
     {
       rank: 4,
       userId: 'u4',
-      username: 'Master_Arjun',
+      username: 'Master Arjun',
       playerTag: '#RL-10004',
       avatar: '🏹',
       matchesPlayed: 18,

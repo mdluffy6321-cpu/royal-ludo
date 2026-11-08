@@ -177,8 +177,8 @@ export const TopNavbar: React.FC<TopNavbarProps> = ({
                     {user.avatar || '👑'}
                   </div>
                   <div className="hidden sm:flex flex-col text-left">
-                    <span className="text-xs font-semibold text-slate-200 leading-tight truncate max-w-[90px]">
-                      {user.username}
+                    <span className="text-xs font-semibold text-slate-200 leading-tight truncate max-w-[110px]">
+                      {user.username.replace(/_/g, ' ')}
                     </span>
                     <span className="text-[10px] text-amber-400 font-mono leading-none">
                       {user.playerTag}
@@ -194,7 +194,7 @@ export const TopNavbar: React.FC<TopNavbarProps> = ({
                   >
                     <div className="px-3 py-2 border-b border-royal-border/80">
                       <p className="text-xs text-slate-400">Signed in as</p>
-                      <p className="text-sm font-bold text-white truncate">{user.username}</p>
+                      <p className="text-sm font-bold text-white truncate">{user.username.replace(/_/g, ' ')}</p>
                       <p className="text-xs text-amber-400 font-mono">{user.playerTag}</p>
                     </div>
 
