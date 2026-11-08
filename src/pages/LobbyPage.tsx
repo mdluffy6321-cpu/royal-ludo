@@ -14,7 +14,7 @@ interface LobbyPageProps {
 export const LobbyPage: React.FC<LobbyPageProps> = ({ roomCode, onStartGame, onBackToDashboard }) => {
   const { user } = useAuth();
   const { playClick, playSixRolled } = useSound();
-  const { socket } = useSocket();
+  const { socket, connected } = useSocket();
 
   const [copied, setCopied] = useState(false);
   const [players, setPlayers] = useState<Partial<Player>[]>([
@@ -83,7 +83,7 @@ export const LobbyPage: React.FC<LobbyPageProps> = ({ roomCode, onStartGame, onB
 
   const handleStartGame = () => {
     playSixRolled();
-    if (socket) {
+    if (socket && connected) {
       socket.emit('START_PRIVATE_GAME', { roomCode });
     } else {
       onStartGame(`room_${roomCode}`, 'classic4p');

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useSound } from '../context/SoundContext';
 import { useSocket } from '../context/SocketContext';
@@ -35,7 +35,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
 }) => {
   const { user, updateCoins } = useAuth();
   const { playClick, playSixRolled } = useSound();
-  const { socket } = useSocket();
+  const { socket, connected } = useSocket();
 
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [joinCodeInput, setJoinCodeInput] = useState('');
@@ -100,10 +100,30 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
     };
   }, [socket, onStartGame]);
 
+  // Listen for BroadcastChannel cross-tab events on standalone Vercel
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.BroadcastChannel) return;
+    const channel = new BroadcastChannel('royal_ludo_arena');
+
+    channel.onmessage = (event) => {
+      const data = event.data;
+      if (data?.type === 'NEW_BATTLE') {
+        setBattles(prev => [data.battle, ...prev.filter(b => b.id !== data.battle.id)]);
+      } else if (data?.type === 'ACCEPT_BATTLE') {
+        setBattles(prev => prev.filter(b => b.id !== data.battleId));
+        if (user && data.battle?.creatorId === user.id) {
+          onStartGame(data.roomId, data.mode);
+        }
+      }
+    };
+
+    return () => channel.close();
+  }, [user, onStartGame]);
+
   const handleStartPracticeAI = () => {
     playClick();
     if (!user) return;
-    if (socket) {
+    if (socket && connected) {
       socket.emit('CREATE_AI_GAME', { player: user, mode: '1v1' });
       socket.once('GAME_STARTED', ({ roomId }) => {
         onStartGame(roomId, 'ai');
@@ -116,7 +136,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   const handleCreatePrivateRoom = () => {
     playClick();
     if (!user) return;
-    if (socket) {
+    if (socket && connected) {
       socket.emit('CREATE_PRIVATE_ROOM', { host: user, mode: 'classic4p', entryFee: 0 });
       socket.once('PRIVATE_ROOM_CREATED', ({ roomCode }) => {
         onOpenLobby(roomCode);
@@ -130,7 +150,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   const handleJoinPrivateRoom = () => {
     if (!joinCodeInput.trim() || !user) return;
     playClick();
-    if (socket) {
+    if (socket && connected) {
       socket.emit('JOIN_PRIVATE_ROOM', { roomCode: joinCodeInput.trim().toUpperCase(), player: user });
       socket.once('PRIVATE_ROOM_JOINED', (room) => {
         setJoinModalOpen(false);
@@ -153,11 +173,17 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
     // Escrow deduction
     updateCoins(user.coins - battle.entryFee);
 
-    if (socket) {
+    if (socket && connected) {
       socket.emit('ACCEPT_BATTLE_CHALLENGE', { battleId: battle.id, player: user });
     } else {
-      // Offline fallback
-      onStartGame(`room_${battle.id}`, battle.mode);
+      // Standalone Vercel cross-tab sync
+      const roomId = battle.roomId || `room_${battle.id}`;
+      if (typeof window !== 'undefined' && window.BroadcastChannel) {
+        const channel = new BroadcastChannel('royal_ludo_arena');
+        channel.postMessage({ type: 'ACCEPT_BATTLE', battleId: battle.id, roomId, mode: battle.mode, opponent: user });
+        channel.close();
+      }
+      onStartGame(roomId, battle.mode);
     }
   };
 

@@ -57,6 +57,12 @@ export const CreateBattleModal: React.FC<CreateBattleModalProps> = ({ isOpen, on
       socket.emit('CREATE_BATTLE_CHALLENGE', newBattle);
     }
 
+    if (typeof window !== 'undefined' && window.BroadcastChannel) {
+      const channel = new BroadcastChannel('royal_ludo_arena');
+      channel.postMessage({ type: 'NEW_BATTLE', battle: newBattle });
+      channel.close();
+    }
+
     playSixRolled();
     setLoading(false);
     onBattleCreated(newBattle);

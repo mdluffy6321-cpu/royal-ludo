@@ -16,9 +16,9 @@ interface GamePageProps {
 }
 
 export const GamePage: React.FC<GamePageProps> = ({ roomId, gameMode, onExitGame }) => {
-  const { user } = useAuth();
-  const { playClick, playDiceRoll, playTokenStep, playCapture, playTimerTick } = useSound();
-  const { socket } = useSocket();
+  const { user, updateCoins } = useAuth();
+  const { playClick, playDiceRoll, playTokenStep, playCapture, playTimerTick, playSixRolled } = useSound();
+  const { socket, connected } = useSocket();
 
   // Local simulated fallback state if offline
   const [gameState, setGameState] = useState<GameRoomState>(() => {
@@ -96,26 +96,64 @@ export const GamePage: React.FC<GamePageProps> = ({ roomId, gameMode, onExitGame
   const [activeReaction, setActiveReaction] = useState<string | null>(null);
   const [confirmExitOpen, setConfirmExitOpen] = useState(false);
 
-  // Sync with Server Authoritative Engine
+  // Sync with Server Authoritative Engine or BroadcastChannel (cross-tab Vercel)
   useEffect(() => {
-    if (!socket) return;
+    if (socket && connected) {
+      socket.emit('JOIN_GAME_ROOM', { roomId });
 
-    socket.emit('JOIN_GAME_ROOM', { roomId });
+      socket.on('GAME_STATE_UPDATE', (updatedState: GameRoomState) => {
+        setGameState(updatedState);
+      });
 
-    socket.on('GAME_STATE_UPDATE', (updatedState: GameRoomState) => {
-      setGameState(updatedState);
-    });
+      socket.on('EMOJI_REACTION', ({ emoji }: { emoji: string }) => {
+        setActiveReaction(emoji);
+        setTimeout(() => setActiveReaction(null), 2500);
+      });
 
-    socket.on('EMOJI_REACTION', ({ emoji }: { emoji: string }) => {
-      setActiveReaction(emoji);
-      setTimeout(() => setActiveReaction(null), 2500);
-    });
+      return () => {
+        socket.off('GAME_STATE_UPDATE');
+        socket.off('EMOJI_REACTION');
+      };
+    } else if (typeof window !== 'undefined' && window.BroadcastChannel) {
+      // Cross-tab real-time sync on standalone Vercel
+      const channel = new BroadcastChannel(`royal_game_${roomId}`);
+      channel.onmessage = (event) => {
+        const data = event.data;
+        if (data?.type === 'SYNC_STATE' && data.state) {
+          setGameState(data.state);
+        } else if (data?.type === 'EMOJI') {
+          setActiveReaction(data.emoji);
+          setTimeout(() => setActiveReaction(null), 2500);
+        }
+      };
+      return () => channel.close();
+    }
+  }, [socket, connected, roomId]);
 
-    return () => {
-      socket.off('GAME_STATE_UPDATE');
-      socket.off('EMOJI_REACTION');
-    };
-  }, [socket, roomId]);
+  // Turn timer countdown in standalone mode
+  useEffect(() => {
+    if (connected || gameState.status !== 'in_progress') return;
+
+    const timer = setInterval(() => {
+      setGameState((prev: GameRoomState) => {
+        if (prev.turnTimeout <= 1) {
+          // Timeout: switch turn or auto-move
+          const colors: LudoColor[] = prev.mode === '1v1' ? ['red', 'yellow'] : ['red', 'green', 'yellow', 'blue'];
+          const nextIdx = (colors.indexOf(prev.currentTurnColor) + 1) % colors.length;
+          return {
+            ...prev,
+            currentTurnColor: colors[nextIdx],
+            turnTimeout: 15,
+            diceValue: null,
+            validTokenIds: [],
+          };
+        }
+        return { ...prev, turnTimeout: prev.turnTimeout - 1 };
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [connected, gameState.status, gameState.currentTurnColor]);
 
   // Turn timer audio tick
   useEffect(() => {
@@ -128,21 +166,136 @@ export const GamePage: React.FC<GamePageProps> = ({ roomId, gameMode, onExitGame
   const isMyTurn = currentPlayer.id === user?.id;
   const canRoll = isMyTurn && gameState.diceValue === null && !gameState.diceRolling && gameState.status === 'in_progress';
 
+  // Automated Opponent/Bot Turn in Standalone Vercel Mode
+  useEffect(() => {
+    if (connected || gameState.status !== 'in_progress') return;
+    if (currentPlayer.id === user?.id) return; // User's turn
+
+    // Opponent/Bot Turn Simulation
+    const botRollTimer = setTimeout(() => {
+      const roll = Math.floor(Math.random() * 6) + 1;
+      playDiceRoll();
+
+      setGameState((prev: GameRoomState) => {
+        const bot = prev.players.find((p: Player) => p.color === prev.currentTurnColor);
+        if (!bot) return prev;
+
+        const validTokens = bot.tokens.filter((t: TokenPiece) => 
+          (t.isYard && roll === 6) || (!t.isYard && t.stepCount + roll <= 57)
+        );
+
+        if (validTokens.length === 0) {
+          // No moves possible, pass turn after 1s
+          setTimeout(() => {
+            setGameState((pState: GameRoomState) => {
+              const colors: LudoColor[] = pState.mode === '1v1' ? ['red', 'yellow'] : ['red', 'green', 'yellow', 'blue'];
+              const nextIdx = (colors.indexOf(pState.currentTurnColor) + 1) % colors.length;
+              return {
+                ...pState,
+                diceValue: null,
+                validTokenIds: [],
+                currentTurnColor: colors[nextIdx],
+                turnTimeout: 15,
+              };
+            });
+          }, 1000);
+
+          return { ...prev, diceValue: roll, validTokenIds: [] };
+        }
+
+        // Choose best token: unlock from yard if 6, else advanced token
+        const chosenToken = validTokens.find(t => t.isYard) || validTokens[0];
+
+        setTimeout(() => {
+          playTokenStep();
+          setGameState((pState: GameRoomState) => {
+            const currentBot = pState.players.find((p: Player) => p.color === pState.currentTurnColor)!;
+            const targetToken = currentBot.tokens.find((t: TokenPiece) => t.id === chosenToken.id)!;
+
+            if (targetToken.isYard) {
+              targetToken.isYard = false;
+              targetToken.stepCount = 0;
+              targetToken.isSafe = true;
+            } else {
+              targetToken.stepCount += roll;
+              if (targetToken.stepCount === 57) {
+                targetToken.isHome = true;
+                currentBot.tokensHome += 1;
+              }
+            }
+
+            const isWinner = currentBot.tokensHome >= (pState.mode === '1v1' ? 1 : 4);
+            const extraRoll = roll === 6;
+
+            const colors: LudoColor[] = pState.mode === '1v1' ? ['red', 'yellow'] : ['red', 'green', 'yellow', 'blue'];
+            const nextIdx = (colors.indexOf(pState.currentTurnColor) + 1) % colors.length;
+
+            return {
+              ...pState,
+              diceValue: null,
+              validTokenIds: [],
+              turnTimeout: 15,
+              status: isWinner ? 'completed' : 'in_progress',
+              winner: isWinner ? currentBot : null,
+              currentTurnColor: extraRoll ? pState.currentTurnColor : colors[nextIdx],
+            };
+          });
+        }, 1200);
+
+        return { ...prev, diceValue: roll, validTokenIds: validTokens.map(t => t.id) };
+      });
+    }, 1000);
+
+    return () => clearTimeout(botRollTimer);
+  }, [connected, gameState.status, gameState.currentTurnColor, currentPlayer.id, user?.id, playDiceRoll, playTokenStep]);
+
   const handleRollDice = () => {
     if (!canRoll || !user) return;
     playDiceRoll();
 
-    if (socket) {
+    if (socket && connected) {
       socket.emit('ROLL_DICE', { roomId, playerId: user.id });
     } else {
-      // Local demo fallback
+      // Local standalone Vercel engine
       const roll = Math.floor(Math.random() * 6) + 1;
       const valid = currentPlayer.tokens.filter((t: TokenPiece) => (t.isYard && roll === 6) || (!t.isYard && t.stepCount + roll <= 57));
-      setGameState((prev: GameRoomState) => ({
-        ...prev,
+      
+      const nextState: GameRoomState = {
+        ...gameState,
         diceValue: roll,
         validTokenIds: valid.map((t: TokenPiece) => t.id),
-      }));
+      };
+
+      setGameState(nextState);
+
+      // Broadcast across tabs if open
+      if (typeof window !== 'undefined' && window.BroadcastChannel) {
+        const channel = new BroadcastChannel(`royal_game_${roomId}`);
+        channel.postMessage({ type: 'SYNC_STATE', state: nextState });
+        channel.close();
+      }
+
+      if (valid.length === 0) {
+        setTimeout(() => {
+          setGameState((prev: GameRoomState) => {
+            const colors: LudoColor[] = prev.mode === '1v1' ? ['red', 'yellow'] : ['red', 'green', 'yellow', 'blue'];
+            const nextIdx = (colors.indexOf(prev.currentTurnColor) + 1) % colors.length;
+            const updated = {
+              ...prev,
+              diceValue: null,
+              validTokenIds: [],
+              currentTurnColor: colors[nextIdx],
+              turnTimeout: 15,
+            };
+            if (typeof window !== 'undefined' && window.BroadcastChannel) {
+              const channel = new BroadcastChannel(`royal_game_${roomId}`);
+              channel.postMessage({ type: 'SYNC_STATE', state: updated });
+              channel.close();
+            }
+            return updated;
+          });
+        }, 1200);
+      }
     }
   };
 
@@ -150,10 +303,10 @@ export const GamePage: React.FC<GamePageProps> = ({ roomId, gameMode, onExitGame
     if (!isMyTurn || !user) return;
     playTokenStep();
 
-    if (socket) {
+    if (socket && connected) {
       socket.emit('MOVE_TOKEN', { roomId, playerId: user.id, tokenId });
     } else {
-      // Local demo fallback move
+      // Local standalone Vercel move logic
       setGameState((prev: GameRoomState) => {
         const roll = prev.diceValue || 6;
         const player = prev.players.find((p: Player) => p.id === user.id)!;
@@ -172,14 +325,31 @@ export const GamePage: React.FC<GamePageProps> = ({ roomId, gameMode, onExitGame
         }
 
         const isWinner = player.tokensHome >= (prev.mode === '1v1' ? 1 : 4);
-        return {
+        if (isWinner && user) {
+          updateCoins(user.coins + prev.prizePool, undefined, (user.winCoins || 0) + prev.prizePool);
+        }
+
+        const extraRoll = roll === 6;
+        const colors: LudoColor[] = prev.mode === '1v1' ? ['red', 'yellow'] : ['red', 'green', 'yellow', 'blue'];
+        const nextIdx = (colors.indexOf(prev.currentTurnColor) + 1) % colors.length;
+
+        const updated: GameRoomState = {
           ...prev,
           diceValue: null,
           validTokenIds: [],
+          turnTimeout: 15,
           status: isWinner ? 'completed' : 'in_progress',
           winner: isWinner ? player : null,
-          currentTurnColor: prev.currentTurnColor === 'red' ? 'yellow' : 'red',
+          currentTurnColor: extraRoll ? prev.currentTurnColor : colors[nextIdx],
         };
+
+        if (typeof window !== 'undefined' && window.BroadcastChannel) {
+          const channel = new BroadcastChannel(`royal_game_${roomId}`);
+          channel.postMessage({ type: 'SYNC_STATE', state: updated });
+          channel.close();
+        }
+
+        return updated;
       });
     }
   };
@@ -189,8 +359,12 @@ export const GamePage: React.FC<GamePageProps> = ({ roomId, gameMode, onExitGame
     setActiveReaction(emoji);
     setTimeout(() => setActiveReaction(null), 2500);
 
-    if (socket && user) {
+    if (socket && connected && user) {
       socket.emit('SEND_REACTION', { roomId, emoji, senderName: user.username });
+    } else if (typeof window !== 'undefined' && window.BroadcastChannel) {
+      const channel = new BroadcastChannel(`royal_game_${roomId}`);
+      channel.postMessage({ type: 'EMOJI', emoji });
+      channel.close();
     }
   };
 
